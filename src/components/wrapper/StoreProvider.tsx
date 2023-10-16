@@ -1,3 +1,4 @@
+import { App } from 'antd';
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'store'
@@ -8,7 +9,7 @@ type StoreProviderProps = {
 const StoreProvider= ({children}: StoreProviderProps) => {
   return (
     <Provider store={store}>
-        {children}
+        <App>{children}</App>
     </Provider>
   )
 }

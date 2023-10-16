@@ -23,4 +23,8 @@ export const categoriesPaths = {
     fetchDetailSubCategories: "/chiTietDanhMucNho",
     updateSubCategories: "/capNhatDanhMucNho",
     deleteSubCategories: "/xoaDanhMucNho"
+};
+
+export const productPaths = {
+    getProductPagination: "/laySanPhamPhanTrang"
 }

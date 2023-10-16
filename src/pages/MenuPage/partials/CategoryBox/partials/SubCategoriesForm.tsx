@@ -48,6 +48,7 @@ const SubCategoriesForm = ({getForm, defaultValue, mainCategoriesList, resetForm
   useEffect(() => {
     if(resetForm) {
       formik.resetForm()
+      setImgSrc(null)
     }
   },[resetForm]);
 
