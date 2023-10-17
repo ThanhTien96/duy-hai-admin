@@ -13,12 +13,7 @@ export type TProductGetParams = {
 export const thunkFetchProductPagination = createAsyncThunk(
   "productSlice/fetchProduct",
   async (params: TProductGetParams, thunkApi) => {
-    const res: AxiosResponse<{
-      total: number;
-      totalPages: number;
-      currentPage: number;
-      data: IProductFromBE;
-    }> = await ProductService.fetchProductPagination(params, thunkApi.signal);
+    const res = await ProductService.fetchProductPagination(params, thunkApi.signal);
     return res.data;
   }
 );

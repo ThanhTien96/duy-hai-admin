@@ -1,3 +1,10 @@
+
+export interface IProductPagination {
+  total: number;
+  totalPages: number;
+  currentPage: number;
+}
+
 export interface IProductMediaType {
   readonly id: string;
   hinhAnh: string;

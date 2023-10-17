@@ -18,6 +18,9 @@ export type TProductCartProps = {
   originalPrice?: number;
   overwritePrice?: number;
   loading?: boolean;
+  quantity?: number;
+  isPublic?: boolean;
+  isSEO?: boolean;
 };
 
 const ProductCart = ({
@@ -27,6 +30,9 @@ const ProductCart = ({
   originalPrice,
   overwritePrice,
   loading = false,
+  quantity,
+  isSEO,
+  isPublic
 }: TProductCartProps) => {
   const {colorPrimary} = useAppSelector(state => state.app.theme);
   return (
@@ -36,6 +42,7 @@ const ProductCart = ({
         hoverable
         cover={
           <Image
+            loading="lazy"
             height={200}
             preview={false}
             alt={title ?? "product"}
@@ -43,7 +50,7 @@ const ProductCart = ({
           />
         }
         actions={[
-          <Button size="small" type="primary" key="detail" >Chi Tiết</Button>,
+          <a href="#" key="detail" >Chi Tiết</a>,
           <SettingOutlined key="setting" />,
           <EditOutlined key="edit" />,
         ]}
@@ -64,12 +71,15 @@ const ProductCart = ({
         </Space>
         <Divider className="my-4" />
         <Meta
-          description={"Tổng số lượng: 100"}
+          description={
+            <Text><b>Tổng Số Lượng:</b> {quantity}</Text>
+          }
         />
         <Divider className="my-4" />
-        <Meta
-          description={"P: 100"}
-        />
+        <Space className="justify-between">
+          <Meta description={`Public: ${isPublic ? "Có" : "Không"}`} />
+          <Meta description={`Public: ${isPublic ? "Có" : "Không"}`} />
+        </Space>
       </Card>
     </Badge.Ribbon>
   );
