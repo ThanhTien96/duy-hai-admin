@@ -13,6 +13,7 @@ const Account = React.lazy(() => import("pages/SettingPage/subsContent/AccountSe
 const Profile = React.lazy(() => import("pages/ProfilePage"));
 const Menu = React.lazy(() => import("pages/MenuPage"));
 const Product = React.lazy(() => import("pages/ProductPage"));
+const AddProduct = React.lazy(() => import("pages/ProductPage/AddProductPage/AddProductPage"))
 
 const extendedRoutes: RouteObject[] = [
     {
@@ -47,7 +48,18 @@ const extendedRoutes: RouteObject[] = [
     },
     {
         path: pagePaths.product,
-        element: <Product />
+        element: <Outlet />,
+        children: [
+            {
+                index: true,
+                path: '',
+                element: <Product />,
+            },
+            {
+                path: pagePaths.addProduct,
+                element: <AddProduct />
+            }
+        ]
     }
 ];
 

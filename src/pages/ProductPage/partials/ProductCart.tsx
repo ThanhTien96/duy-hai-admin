@@ -1,9 +1,10 @@
-import { Badge, Button, Card, Divider, Image, Space, Tooltip, Typography } from "antd";
+import { Badge, Card, Divider, Image, Space, Tooltip, Typography } from "antd";
 import { EMPTY_IMAGE } from "constants";
 import { truncateText } from "utils/truncateText";
 import {
   SettingOutlined,
   EditOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons"
 import Calculator from "utils/calculator";
 import { useAppSelector } from "store";
@@ -19,7 +20,7 @@ export type TProductCartProps = {
   overwritePrice?: number;
   loading?: boolean;
   quantity?: number;
-  isPublic?: boolean;
+  isHot?: boolean;
   isSEO?: boolean;
 };
 
@@ -32,7 +33,7 @@ const ProductCart = ({
   loading = false,
   quantity,
   isSEO,
-  isPublic
+  isHot
 }: TProductCartProps) => {
   const {colorPrimary} = useAppSelector(state => state.app.theme);
   return (
@@ -51,8 +52,9 @@ const ProductCart = ({
         }
         actions={[
           <a href="#" key="detail" >Chi Tiết</a>,
-          <SettingOutlined key="setting" />,
           <EditOutlined key="edit" />,
+          <DeleteOutlined key="delete" />,
+          <SettingOutlined key="setting" />,
         ]}
       >
         <Meta
@@ -77,8 +79,8 @@ const ProductCart = ({
         />
         <Divider className="my-4" />
         <Space className="justify-between">
-          <Meta description={`Public: ${isPublic ? "Có" : "Không"}`} />
-          <Meta description={`Public: ${isPublic ? "Có" : "Không"}`} />
+          <Meta description={`Public: ${isHot ? "Có" : "Không"}`} />
+          <Meta description={`SEO: ${isSEO? "Có" : "Không"}`} />
         </Space>
       </Card>
     </Badge.Ribbon>

@@ -8,7 +8,7 @@ import {
   QuestionButton,
   AccountButton,
 } from "./partials";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 const { Header, Sider, Content } = Layout;
 import "./AppLayout.style.less";
 import { pagePaths } from "constants";
@@ -20,6 +20,7 @@ type MainLayoutProps = {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { token } = theme.useToken();
 
   // handle navigate
@@ -47,7 +48,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           className="border-none"
           mode="inline"
           onClick={handleNavigate}
-          defaultSelectedKeys={[pagePaths.home]}
+          defaultSelectedKeys={[location && location.pathname ? location.pathname.replace("/","") : pagePaths.home]}
           items={menus}
         />
       </Sider>
