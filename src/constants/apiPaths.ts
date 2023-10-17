@@ -22,7 +22,8 @@ export const categoriesPaths = {
     createSubCategories: "/themDanhMucNho",
     fetchDetailSubCategories: "/chiTietDanhMucNho",
     updateSubCategories: "/capNhatDanhMucNho",
-    deleteSubCategories: "/xoaDanhMucNho"
+    deleteSubCategories: "/xoaDanhMucNho",
+    getAllSubCategories: "/layDanhMucNho",
 };
 
 export const productPaths = {

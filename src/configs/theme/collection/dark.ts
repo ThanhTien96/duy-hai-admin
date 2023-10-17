@@ -22,6 +22,9 @@ const instance: ThemeConfig = {
       siderBg: "#2d333b"
 
     },
+    InputNumber: {
+      colorBgContainer: "#1c2128",
+    },
     Card: {
       colorBgLayout: "#282828",
     },
@@ -35,7 +38,10 @@ const instance: ThemeConfig = {
       colorBgContainer: "#1c2128",
     },
     Slider: {
-      colorBgContainer: "#fff",
+      colorFill: "#fff",
+      // colorFillTertiary: "#999999",
+      colorPrimaryBorderHover: "#fff",
+      colorPrimaryBorder: "#c7c7c7"
     },
   },
 };

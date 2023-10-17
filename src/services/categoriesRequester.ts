@@ -105,6 +105,15 @@ class CategoriesService {
             signal
         })
     }
+
+    // fetch all sub categories
+    static getAllSubCategories = async (signal?: AbortSignal) => {
+        return await http({
+            url: categoriesPaths.getAllSubCategories,
+            method: "GET",
+            signal
+        })
+    } 
 }
 
 export {

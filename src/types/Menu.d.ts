@@ -29,6 +29,7 @@ export interface ISubCategoriesFormBE {
   readonly maDanhMucChinh: string;
 }
 
+
 export interface IMainCategoriesFromBE {
   readonly maDanhMucChinh: string;
   tenDanhMuc: string;

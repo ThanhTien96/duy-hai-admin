@@ -1,5 +1,7 @@
 
 export const MESSAGE_TEXT = {
+    getAllSuccess: "Lấy danh sách thành công!",
+    getAllFail: "Lấy danh sách thất bại!",
     getDetailSuccess: "Lấy thông tin thành công!",
     getDetailFaild: "Lấy thông tin thất bại!",
     createSuccess: "Thêm thành công!",
