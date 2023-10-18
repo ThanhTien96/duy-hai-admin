@@ -15,6 +15,28 @@ class ProductService {
             signal
         })
     }
+
+    // get detail product
+    static getDetailProduct = async (id: string, signal?: AbortSignal) => {
+        return await http({
+            url: productPaths.getDetailProduct,
+            method: "GET",
+            params: {
+                maSanPham: id
+            }
+        })
+    }
+
+    // create product
+    static postProduct = async (data: FormData, signal?: AbortSignal) => {
+        return await http({
+            url: productPaths.createProduct,
+            method: "POST",
+            data,
+            signal
+        })
+    }
+
 }
 
 export {

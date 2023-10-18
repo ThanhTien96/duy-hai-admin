@@ -14,6 +14,8 @@ const Profile = React.lazy(() => import("pages/ProfilePage"));
 const Menu = React.lazy(() => import("pages/MenuPage"));
 const Product = React.lazy(() => import("pages/ProductPage"));
 const AddProduct = React.lazy(() => import("pages/ProductPage/AddProductPage/AddProductPage"))
+const EditProduct = React.lazy(() => import("pages/ProductPage/EditProductPage"));
+
 
 const extendedRoutes: RouteObject[] = [
     {
@@ -58,6 +60,10 @@ const extendedRoutes: RouteObject[] = [
             {
                 path: pagePaths.addProduct,
                 element: <AddProduct />
+            },
+            {
+                path: `${pagePaths.updateProduct}/:id`,
+                element: <EditProduct />
             }
         ]
     }

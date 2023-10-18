@@ -9,7 +9,7 @@ import {
   Select,
   Switch,
 } from "antd";
-import { TextEditor } from "components/shared";
+import { TextEditor, UploadImage } from "components/shared";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import SliderInput from "./SliderInput";
@@ -19,6 +19,21 @@ import { ISubCategoriesFormBE } from "types/Menu";
 
 export type TProductFormProps = {
   subCategories: ISubCategoriesFormBE[];
+  getFormValue: (value: TProductFormValue) => void;
+};
+
+export type TProductFormValue = {
+  tenSanPham: string;
+  giaGoc: number;
+  giaGiam: number;
+  tongSoLuong: number;
+  moTa: string;
+  moTaNgan: string;
+  maDanhMucNho: string;
+  seoTitle: string;
+  seoDetail: string;
+  youtubeVideo: string;
+  hinhAnh: File[] | null;
 };
 
 const layout = {
@@ -26,7 +41,7 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const ProductForm = ({ subCategories }: TProductFormProps) => {
+const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
   const formik = useFormik({
     initialValues: {
       tenSanPham: "",
@@ -39,15 +54,25 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
       seoTitle: "",
       seoDetail: "",
       youtubeVideo: "",
-      hot: false,
-      seo: false,
+      hinhAnh: null,
     },
-    onSubmit: (value) => {
-      console.log(value);
+    validationSchema: yup.object({
+      tenSanPham: yup.string().required("*Tên sản phẩm bắt buộc!"),
+      giaGiam: yup.number().min(1, "*Giá bán buộc nhập!").required(),
+      tongSoLuong: yup.number().min(1, "*Tổng số lượng buộc nhập!").required(),
+      moTaNgan: yup.string().required("*Mô tả ngắn buộc nhập!"),
+      maDanhMucNho: yup.string().required("*Danh mục buộc nhập!"),
+      seoTitle: yup.string().required("*Tiêu đề SEO buộc nhập!"),
+      seoDetail: yup.string().required("*Tiêu đề SEO buộc nhập!"),
+    }),
+    onSubmit: (values: TProductFormValue) => {
+      // getFormValue(values)
+      console.log(values);
     },
   });
 
-  const { handleChange, handleSubmit, setFieldValue, values } = formik;
+  const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
+    formik;
 
   return (
     <Form onSubmitCapture={handleSubmit} {...layout}>
@@ -61,6 +86,9 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               name="tenSanPham"
               placeholder="Nhập Tên sản phẩm"
             />
+            {errors.tenSanPham && touched.tenSanPham && (
+              <p className="text-red-500">{errors.tenSanPham}</p>
+            )}
           </Form.Item>
 
           {/* original price  */}
@@ -69,6 +97,7 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               addonAfter={CURRENCY.vnd}
               onChange={(value) => {
                 setFieldValue("giaGoc", value);
+                setFieldValue("giaGiam", value);
               }}
               name="giaGoc"
               placeholder="Nhập giá gốc"
@@ -77,13 +106,16 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
           </Form.Item>
 
           {/* overwrite price */}
-          <Form.Item required label="Giá Giảm">
+          <Form.Item required label="Giá Bán">
             <SliderInput
               onChange={(value: number) => {
                 setFieldValue("giaGiam", value);
               }}
               defaultVal={formik.values.giaGoc}
             />
+            {errors.giaGiam && touched.giaGiam && (
+              <p className="text-red-500">{errors.giaGiam}</p>
+            )}
           </Form.Item>
           {/* total count  */}
           <Form.Item required label="Tổng Số Lượng">
@@ -96,6 +128,9 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               placeholder="Nhập giá gốc"
               className="w-full"
             />
+            {errors.tongSoLuong && touched.tongSoLuong && (
+              <p className="text-red-500">{errors.tongSoLuong}</p>
+            )}
           </Form.Item>
 
           {/* categories */}
@@ -111,6 +146,9 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               }
               placeholder="Chọn danh mục sản phẩm"
             />
+            {errors.maDanhMucNho && touched.maDanhMucNho && (
+              <p className="text-red-500">{errors.maDanhMucNho}</p>
+            )}
           </Form.Item>
 
           {/* sort description */}
@@ -121,29 +159,48 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               rows={5}
               placeholder="Nhập mô tả"
             />
+            {errors.moTaNgan && touched.moTaNgan && (
+              <p className="text-red-500">{errors.moTaNgan}</p>
+            )}
+          </Form.Item>
+
+          {/* upload media */}
+          <Form.Item label="Hình Ảnh" required>
+            <UploadImage
+              getfiles={(files) => {
+                setFieldValue("hinhAnh", files);
+              }}
+              filesQuantity={6}
+            />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 16, offset: 6 }}>
             <Divider className="my-4" />
           </Form.Item>
 
-          {/* No Required Field*/}
-          <Form.Item label="Tiêu Đề SEO">
+          {/* SEO*/}
+          <Form.Item required label="Tiêu Đề SEO">
             <Input
               onChange={handleChange}
               name="seoTitle"
               placeholder="Nhập tiêu đề SEO"
             />
+            {errors.seoTitle && touched.seoTitle && (
+              <p className="text-red-500">{errors.seoTitle}</p>
+            )}
           </Form.Item>
 
           {/* SEO Description */}
-          <Form.Item label="Mô Tả SEO">
+          <Form.Item required label="Mô Tả SEO">
             <TextArea
               onChange={handleChange}
               name="seoDetail"
               rows={3}
               placeholder="Nhập mô tả SEO"
             />
+            {errors.seoDetail && touched.seoDetail && (
+              <p className="text-red-500">{errors.seoDetail}</p>
+            )}
           </Form.Item>
 
           {/* video link */}
@@ -152,26 +209,6 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
               onChange={handleChange}
               name="youtubeVideo"
               placeholder="https://www.youtube.com/embed/example"
-            />
-          </Form.Item>
-
-          {/* HOT */}
-          <Form.Item label="Sản phẩm HOT">
-            <Switch
-              onChange={(e) => setFieldValue("hot", e)}
-              checkedChildren="Có"
-              unCheckedChildren="Không"
-              defaultChecked={values.hot}
-            />
-          </Form.Item>
-
-          {/* SEO */}
-          <Form.Item label="Sản phẩm HOT">
-            <Switch
-              onChange={(e) => setFieldValue("seo",e)}
-              checkedChildren="Có"
-              unCheckedChildren="Không"
-              defaultChecked={values.hot}
             />
           </Form.Item>
 
@@ -187,6 +224,7 @@ const ProductForm = ({ subCategories }: TProductFormProps) => {
           {/* markdown editor */}
           <Form.Item wrapperCol={{ span: 24 }}>
             <TextEditor
+              height={900}
               onChange={(value: any) => setFieldValue("moTa", value)}
             />
           </Form.Item>

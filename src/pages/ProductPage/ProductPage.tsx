@@ -76,6 +76,7 @@ const ProductPage: React.FC = () => {
               return (
                 <Col key={index} span={6}>
                   <ProductCart
+                    id={prod.maSanPham}
                     img={
                       prod && prod?.hinhAnh?.length > 0
                         ? prod?.hinhAnh[0].hinhAnh

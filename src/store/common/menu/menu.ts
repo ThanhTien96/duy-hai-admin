@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IMainCategoriesFromBE, TMenuFromBE } from "types/Menu";
-import { thunkFetMainCategories, thunkFetchMenu } from "./menuAsyncThunk";
+import { IMainCategoriesFromBE, ISubCategoriesFormBE, TMenuFromBE } from "types/Menu";
+import { thunkFetMainCategories, thunkFetchMenu, thunkFetchSubCategories } from "./menuAsyncThunk";
 
 export interface IMenuSliceProps {
     menu?: TMenuFromBE;
     loading: boolean;
     categoriesList: IMainCategoriesFromBE[];
+    subCategoriesList: ISubCategoriesFormBE[];
 }
 
 const initialState: IMenuSliceProps = {
     menu: undefined,
     loading: false,
     categoriesList: [],
+    subCategoriesList: [],
 };
 
 const menuSlice = createSlice({
@@ -42,6 +44,9 @@ const menuSlice = createSlice({
         });
         builder.addCase(thunkFetMainCategories.rejected, (state) => {
             state.loading = false;
+        });
+        builder.addCase(thunkFetchSubCategories.fulfilled, (state, {payload}) => {
+            state.subCategoriesList = payload;
         })
     }
 });

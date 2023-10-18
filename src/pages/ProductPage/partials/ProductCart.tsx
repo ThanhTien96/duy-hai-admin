@@ -1,5 +1,5 @@
 import { Badge, Card, Divider, Image, Space, Tooltip, Typography } from "antd";
-import { EMPTY_IMAGE } from "constants";
+import { EMPTY_IMAGE, pagePaths } from "constants";
 import { truncateText } from "utils/truncateText";
 import {
   SettingOutlined,
@@ -8,11 +8,13 @@ import {
 } from "@ant-design/icons"
 import Calculator from "utils/calculator";
 import { useAppSelector } from "store";
+import { useNavigate } from "react-router";
 const { Meta } = Card;
 const { Text } = Typography;
 
 
 export type TProductCartProps = {
+  id: string;
   img?: string;
   title?: string;
   description?: string;
@@ -25,6 +27,7 @@ export type TProductCartProps = {
 };
 
 const ProductCart = ({
+  id,
   img,
   title,
   description,
@@ -36,6 +39,7 @@ const ProductCart = ({
   isHot
 }: TProductCartProps) => {
   const {colorPrimary} = useAppSelector(state => state.app.theme);
+  const navigate = useNavigate();
   return (
     <Badge.Ribbon color={colorPrimary} text={"- " +Calculator.calcPercentDiscount(originalPrice ?? 0, overwritePrice ?? 0) + " %"}>
       <Card
@@ -52,7 +56,9 @@ const ProductCart = ({
         }
         actions={[
           <a href="#" key="detail" >Chi Tiết</a>,
-          <EditOutlined key="edit" />,
+          <EditOutlined 
+          onClick={() => navigate(`/${pagePaths.product}/${pagePaths.updateProduct}/${id}`)}
+          key="edit" />,
           <DeleteOutlined key="delete" />,
           <SettingOutlined key="setting" />,
         ]}

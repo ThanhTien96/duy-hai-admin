@@ -27,5 +27,7 @@ export const categoriesPaths = {
 };
 
 export const productPaths = {
-    getProductPagination: "/laySanPhamPhanTrang"
+    getProductPagination: "/laySanPhamPhanTrang",
+    getDetailProduct: "/layChiTietSanPham",
+    createProduct: "/themSanPham",
 }

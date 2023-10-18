@@ -9,7 +9,8 @@ const pagePaths = {
     account: "account",
     menu: "menu",
     product: "product",
-    addProduct: "addProduct"
+    addProduct: "addProduct",
+    updateProduct: "updateProduct"
 };
 
 export default pagePaths;

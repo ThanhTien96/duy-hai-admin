@@ -5,7 +5,7 @@ import {
     WindowsOutlined,
     ShoppingFilled,
     ShopFilled,
-    AppstoreAddOutlined
+    AppstoreAddOutlined,
 } from '@ant-design/icons'
 
 export type MenuItem = Required<MenuProps>['items'][number];
@@ -31,7 +31,7 @@ const items: MenuItem[] = [
     getItem('Menu', pagePaths.menu, <WindowsOutlined />),    
     getItem('Product', pagePaths.product + "-index", <ShopFilled />, [
         getItem("All Product", pagePaths.product, <ShoppingFilled />),
-        getItem("All Product", `${pagePaths.product}/${pagePaths.addProduct}`, <AppstoreAddOutlined />)
+        getItem("Add Product", `${pagePaths.product}/${pagePaths.addProduct}`, <AppstoreAddOutlined />),
     ]),    
 ];
 

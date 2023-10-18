@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useAppSelector } from "store";
-import { Empty } from "antd";
 
 export type TTextEditorProps = {
   onChange: (value: string) => void;
+  height?: number
 };
 
-const TextEditor = ({onChange}: TTextEditorProps) => {
+const TextEditor = ({onChange, height}: TTextEditorProps) => {
   const { selected } = useAppSelector((state) => state.app.theme);
   
 
@@ -20,7 +19,7 @@ const TextEditor = ({onChange}: TTextEditorProps) => {
         init={{
           statusbar: false,
           borderRadius: 0,
-          height: 500,
+          height: height ?? 500,
           width: '100%',
           menubar: true,
           content_css: selected,
