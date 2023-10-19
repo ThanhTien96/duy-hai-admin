@@ -30,4 +30,6 @@ export const productPaths = {
     getProductPagination: "/laySanPhamPhanTrang",
     getDetailProduct: "/layChiTietSanPham",
     createProduct: "/themSanPham",
+    updateProduct: "/capNhatSanPham",
+    deleteProduct: "/xoaSanPham"
 }

@@ -37,6 +37,30 @@ class ProductService {
         })
     }
 
+    // update product
+    static updateProduct = async (id: string, data: FormData, signal?: AbortSignal) => {
+        return await http({
+            url: productPaths.updateProduct,
+            method: "PUT",
+            params: {
+                maSanPham: id
+            },
+            data,
+            signal
+        })
+    } 
+
+    // handle delete product
+    static deleteProduct = async (id: string, signal?: AbortSignal) => {
+        return await http({
+            url: productPaths.deleteProduct,
+            method: "DELETE",
+            params: {
+                maSanPham: id
+            },
+            signal
+        })
+    }
 }
 
 export {

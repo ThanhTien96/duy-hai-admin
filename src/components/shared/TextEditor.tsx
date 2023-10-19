@@ -3,19 +3,19 @@ import { useAppSelector } from "store";
 
 export type TTextEditorProps = {
   onChange: (value: string) => void;
-  height?: number
+  height?: number;
+  defaultValue?: string;
 };
 
-const TextEditor = ({onChange, height}: TTextEditorProps) => {
+const TextEditor = ({onChange, height,defaultValue}: TTextEditorProps) => {
   const { selected } = useAppSelector((state) => state.app.theme);
-  
 
   return (
     <>
       <Editor
         apiKey="wumtctoa4zi0a1l66upxgydpoqz6d9jqqw9d26a862f6gfia"
         onEditorChange={onChange}
-        // initialValue=""
+        initialValue={defaultValue}
         init={{
           statusbar: false,
           borderRadius: 0,

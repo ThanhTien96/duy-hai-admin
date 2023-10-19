@@ -3,7 +3,7 @@ import { ProductForm } from "../partials";
 import { Content } from "antd/es/layout/layout";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE, pagePaths } from "constants";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "store";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { ProductService } from "services/productRequester";
 import { setProductLoading } from "store/common/product/product";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
+import { TProductFormValue } from "../partials/ProductForm";
 
 const { Text } = Typography;
 
@@ -19,10 +20,12 @@ const EditProductPage: React.FC = () => {
   const location = useLocation();
   const params = useParams();
   const dispatch = useAppDispatch();
-  console.log("☣️ >>> location: ", params);
+  const navigate = useNavigate();
   // store
   const { loading } = useAppSelector((state) => state.common.product);
   const { subCategoriesList } = useAppSelector((state) => state.common.menu);
+  const controller = new AbortController();
+
   // detail product state
   const [detailProduct, setDetailProdcut] = useState<IProductFromBE>();
 
@@ -53,6 +56,43 @@ const EditProductPage: React.FC = () => {
       controller.abort();
     };
   }, []);
+
+  /********** ACTION HANDLER *********/
+  const handleUpdateProduct = async (values: TProductFormValue) => {
+
+    const formData = new FormData();
+    formData.append("tenSanPham", values.tenSanPham);
+    formData.append("giaGoc", String(values.giaGoc));
+    values.giaGiam > 0 && formData.append("giaGiam", String(values.giaGiam));
+    values.tongSoLuong > 0 && formData.append("tongSoLuong", String(values.tongSoLuong));
+    formData.append("moTa", values.moTa);
+    formData.append("moTaNgan", values.moTaNgan);
+    formData.append("maDanhMucNho", values.maDanhMucNho);
+    formData.append("seoTitle", values.seoTitle);
+    formData.append("seoDetail", values.seoDetail);
+    formData.append("youtubeVideo", values.youtubeVideo);
+
+    if (values.hinhAnh) {
+      values.hinhAnh?.forEach((ele: any) => {
+        formData.append("hinhAnh", ele.originFileObj);
+      });
+    }
+
+    dispatch(setProductLoading(true));
+    try {
+      if(detailProduct) {
+        const res = await ProductService.updateProduct(detailProduct?.maSanPham, formData, controller.signal);
+        if(res.status === STATUS_CODE.success) {
+          dispatch(setAlert({message: MESSAGE_TEXT.updateSuccess, status: STATUS_CODE.success}));
+          navigate(`/${pagePaths.product}`)
+        }
+      }
+    } catch (err: Error | any) {
+      dispatch(setAlert({message: MESSAGE_TEXT.updateFaild, status: STORE_STATUS.error}));
+    } finally {
+      dispatch(setProductLoading(false));
+    }
+  }
 
   return (
     <PlainLayout
@@ -91,7 +131,8 @@ const EditProductPage: React.FC = () => {
           />
           <Card className="rounded-none">
             <ProductForm
-              getFormValue={(value) => console.log(value)}
+              defaultValue={detailProduct}
+              getFormValue={(value) => handleUpdateProduct(value)}
               subCategories={subCategoriesList}
             />
           </Card>

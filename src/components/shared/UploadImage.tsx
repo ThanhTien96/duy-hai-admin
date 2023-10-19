@@ -41,8 +41,8 @@ const UploadImage = ({filesQuantity = 1, getfiles, resetFile}: TUploadImageProps
     };
   
     const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+      setFileList(newFileList); 
         getfiles &&  getfiles(newFileList);
-        setFileList(newFileList); 
     }
 
     useEffect(() => {

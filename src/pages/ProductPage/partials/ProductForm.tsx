@@ -3,11 +3,12 @@ import {
   Col,
   Divider,
   Form,
+  Image,
   Input,
   InputNumber,
   Row,
   Select,
-  Switch,
+  Space,
 } from "antd";
 import { TextEditor, UploadImage } from "components/shared";
 import { useFormik } from "formik";
@@ -16,10 +17,12 @@ import SliderInput from "./SliderInput";
 import { CURRENCY } from "constants";
 import TextArea from "antd/es/input/TextArea";
 import { ISubCategoriesFormBE } from "types/Menu";
+import { IProductFromBE, IProductMediaType } from "types/Product";
 
 export type TProductFormProps = {
   subCategories: ISubCategoriesFormBE[];
   getFormValue: (value: TProductFormValue) => void;
+  defaultValue?: IProductFromBE;
 };
 
 export type TProductFormValue = {
@@ -41,19 +44,27 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
+const ProductForm = ({
+  subCategories,
+  getFormValue,
+  defaultValue,
+}: TProductFormProps) => {
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      tenSanPham: "",
-      giaGoc: 0,
-      giaGiam: 0,
-      tongSoLuong: 0,
-      moTa: "",
-      moTaNgan: "",
-      maDanhMucNho: "",
-      seoTitle: "",
-      seoDetail: "",
-      youtubeVideo: "",
+      tenSanPham:
+        defaultValue && defaultValue.tenSanPham ? defaultValue.tenSanPham : "",
+      giaGoc: defaultValue && defaultValue.giaGoc ? defaultValue.giaGoc : 0,
+      giaGiam: defaultValue && defaultValue.giaGiam ? defaultValue.giaGiam : 0,
+      tongSoLuong:
+        defaultValue && defaultValue.tongSoLuong ? defaultValue.tongSoLuong : 0,
+      moTa: defaultValue && defaultValue.moTa ? defaultValue.moTa : "",
+      moTaNgan:
+        defaultValue && defaultValue.moTaNgan ? defaultValue.moTaNgan : "",
+      maDanhMucNho: defaultValue && defaultValue.maDanhMucNho ? defaultValue.maDanhMucNho : "",
+      seoTitle: defaultValue && defaultValue.seoTitle ? defaultValue.seoTitle : "",
+      seoDetail: defaultValue && defaultValue.seoDetail ? defaultValue.seoDetail : "",
+      youtubeVideo: defaultValue && defaultValue.youtubeVideo ? defaultValue.youtubeVideo : "",
       hinhAnh: null,
     },
     validationSchema: yup.object({
@@ -66,8 +77,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
       seoDetail: yup.string().required("*Tiêu đề SEO buộc nhập!"),
     }),
     onSubmit: (values: TProductFormValue) => {
-      // getFormValue(values)
-      console.log(values);
+      getFormValue(values);
     },
   });
 
@@ -82,6 +92,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* product name */}
           <Form.Item required label="Tên Sản phẩm">
             <Input
+            value={values.tenSanPham}
               onChange={handleChange}
               name="tenSanPham"
               placeholder="Nhập Tên sản phẩm"
@@ -94,10 +105,11 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* original price  */}
           <Form.Item required label="Giá Gốc">
             <InputNumber
+            value={values.giaGoc && values.giaGoc > 0 ? values.giaGoc : undefined}
               addonAfter={CURRENCY.vnd}
               onChange={(value) => {
                 setFieldValue("giaGoc", value);
-                setFieldValue("giaGiam", value);
+                !defaultValue && setFieldValue("giaGiam", value);
               }}
               name="giaGoc"
               placeholder="Nhập giá gốc"
@@ -111,7 +123,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
               onChange={(value: number) => {
                 setFieldValue("giaGiam", value);
               }}
-              defaultVal={formik.values.giaGoc}
+              defaultVal={defaultValue && values.giaGiam > 0 ? values.giaGiam : values.giaGoc }
             />
             {errors.giaGiam && touched.giaGiam && (
               <p className="text-red-500">{errors.giaGiam}</p>
@@ -120,12 +132,12 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* total count  */}
           <Form.Item required label="Tổng Số Lượng">
             <InputNumber
+            value={values.tongSoLuong && values.tongSoLuong > 0 ? values.tongSoLuong : undefined}
               addonAfter={CURRENCY.vnd}
               onChange={(value) => {
                 setFieldValue("tongSoLuong", value);
               }}
-              name="giaGoc"
-              placeholder="Nhập giá gốc"
+              placeholder="Nhập tổng số lượng"
               className="w-full"
             />
             {errors.tongSoLuong && touched.tongSoLuong && (
@@ -136,6 +148,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* categories */}
           <Form.Item required label="Danh Mục">
             <Select
+              value={values.maDanhMucNho}
               onChange={(value) => setFieldValue("maDanhMucNho", value)}
               options={
                 subCategories &&
@@ -154,6 +167,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* sort description */}
           <Form.Item required label="Mô Tả Ngắn">
             <TextArea
+            value={values.moTaNgan}
               onChange={handleChange}
               name="moTaNgan"
               rows={5}
@@ -166,12 +180,20 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
 
           {/* upload media */}
           <Form.Item label="Hình Ảnh" required>
+            
             <UploadImage
               getfiles={(files) => {
                 setFieldValue("hinhAnh", files);
               }}
               filesQuantity={6}
             />
+            {
+              !values.hinhAnh && defaultValue && (
+                <Space className="mb-4">
+                  {defaultValue.hinhAnh.map((img: IProductMediaType) => <Image key={img.id} width={100} height={100} src={img.hinhAnh} alt={defaultValue.tenSanPham}/>)}
+                </Space>
+              )
+            }
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 16, offset: 6 }}>
@@ -181,6 +203,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* SEO*/}
           <Form.Item required label="Tiêu Đề SEO">
             <Input
+            value={values.seoTitle}
               onChange={handleChange}
               name="seoTitle"
               placeholder="Nhập tiêu đề SEO"
@@ -193,6 +216,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* SEO Description */}
           <Form.Item required label="Mô Tả SEO">
             <TextArea
+            value={values.seoDetail}
               onChange={handleChange}
               name="seoDetail"
               rows={3}
@@ -206,6 +230,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* video link */}
           <Form.Item label="Video Youtube">
             <Input
+            value={values.youtubeVideo}
               onChange={handleChange}
               name="youtubeVideo"
               placeholder="https://www.youtube.com/embed/example"
@@ -214,7 +239,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
 
           <Form.Item wrapperCol={{ span: 16, offset: 6 }}>
             <Button htmlType="submit" type="primary">
-              Thêm Sản Phẩm
+              {defaultValue ? "Cập Nhật" : "Thêm Sản Phẩm"}
             </Button>
           </Form.Item>
         </Col>
@@ -224,6 +249,7 @@ const ProductForm = ({ subCategories, getFormValue }: TProductFormProps) => {
           {/* markdown editor */}
           <Form.Item wrapperCol={{ span: 24 }}>
             <TextEditor
+              defaultValue={defaultValue?.moTa}
               height={900}
               onChange={(value: any) => setFieldValue("moTa", value)}
             />

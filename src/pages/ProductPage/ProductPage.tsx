@@ -1,8 +1,8 @@
 import { Breadcrumb, Button, Col, Row, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
-import { COPY_RIGHT, EMPTY_IMAGE } from "constants";
-import React, { useEffect, useState } from "react";
+import { COPY_RIGHT, EMPTY_IMAGE, STATUS_CODE } from "constants";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store";
 import { thunkFetchProductPagination } from "store/common/product/productAsyncThunk";
 import { ProductCart } from "./partials";
@@ -11,6 +11,8 @@ import { HomeOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
+import { setProductLoading } from "store/common/product/product";
+import { ProductService } from "services/productRequester";
 
 const { Text } = Typography;
 
@@ -47,6 +49,21 @@ const ProductPage: React.FC = () => {
     };
   }, []);
 
+  const handleDeleteProduct = useCallback(async (id: string) => {
+    dispatch(setProductLoading(true));
+    try {
+      const res = await ProductService.deleteProduct(id);
+      if(res.status === STATUS_CODE.success) {
+        dispatch(setAlert({message: MESSAGE_TEXT.deleteSuccess, status: STORE_STATUS.success}));
+        dispatch(thunkFetchProductPagination({page: 1, perPage: 8}))
+      }
+    } catch (err: Error | any) {
+      dispatch(setAlert({message: MESSAGE_TEXT.deleteFaild, status: STORE_STATUS.error}));
+    } finally {
+      dispatch(setProductLoading(false))
+    }
+  }, [])
+
   return (
     <PlainLayout
       headerprops={{ title: "Product page" }}
@@ -76,6 +93,7 @@ const ProductPage: React.FC = () => {
               return (
                 <Col key={index} span={6}>
                   <ProductCart
+                    onDelete={() => handleDeleteProduct(prod.maSanPham)}
                     id={prod.maSanPham}
                     img={
                       prod && prod?.hinhAnh?.length > 0
