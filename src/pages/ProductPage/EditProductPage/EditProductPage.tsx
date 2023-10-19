@@ -83,7 +83,7 @@ const EditProductPage: React.FC = () => {
       if(detailProduct) {
         const res = await ProductService.updateProduct(detailProduct?.maSanPham, formData, controller.signal);
         if(res.status === STATUS_CODE.success) {
-          dispatch(setAlert({message: MESSAGE_TEXT.updateSuccess, status: STATUS_CODE.success}));
+          dispatch(setAlert({message: MESSAGE_TEXT.updateSuccess, status: STORE_STATUS.success}));
           navigate(`/${pagePaths.product}`)
         }
       }
