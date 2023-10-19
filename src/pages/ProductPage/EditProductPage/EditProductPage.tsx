@@ -35,7 +35,7 @@ const EditProductPage: React.FC = () => {
     const fetchDetailProduct = async (id: string, signal?: AbortSignal) => {
       dispatch(setProductLoading(true));
       try {
-        const res = await ProductService.getDetailProduct(id, signal);
+        const res = await ProductService.getProductDetail(id, signal);
         if (res.status === STATUS_CODE.success) {
           setDetailProdcut(res.data.data);
         }
@@ -59,12 +59,12 @@ const EditProductPage: React.FC = () => {
 
   /********** ACTION HANDLER *********/
   const handleUpdateProduct = async (values: TProductFormValue) => {
-
     const formData = new FormData();
     formData.append("tenSanPham", values.tenSanPham);
     formData.append("giaGoc", String(values.giaGoc));
     values.giaGiam > 0 && formData.append("giaGiam", String(values.giaGiam));
-    values.tongSoLuong > 0 && formData.append("tongSoLuong", String(values.tongSoLuong));
+    values.tongSoLuong > 0 &&
+      formData.append("tongSoLuong", String(values.tongSoLuong));
     formData.append("moTa", values.moTa);
     formData.append("moTaNgan", values.moTaNgan);
     formData.append("maDanhMucNho", values.maDanhMucNho);
@@ -80,19 +80,33 @@ const EditProductPage: React.FC = () => {
 
     dispatch(setProductLoading(true));
     try {
-      if(detailProduct) {
-        const res = await ProductService.updateProduct(detailProduct?.maSanPham, formData, controller.signal);
-        if(res.status === STATUS_CODE.success) {
-          dispatch(setAlert({message: MESSAGE_TEXT.updateSuccess, status: STORE_STATUS.success}));
-          navigate(`/${pagePaths.product}`)
+      if (detailProduct) {
+        const res = await ProductService.updateProduct(
+          detailProduct?.maSanPham,
+          formData,
+          controller.signal
+        );
+        if (res.status === STATUS_CODE.success) {
+          dispatch(
+            setAlert({
+              message: MESSAGE_TEXT.updateSuccess,
+              status: STORE_STATUS.success,
+            })
+          );
+          navigate(`/${pagePaths.product}`);
         }
       }
     } catch (err: Error | any) {
-      dispatch(setAlert({message: MESSAGE_TEXT.updateFaild, status: STORE_STATUS.error}));
+      dispatch(
+        setAlert({
+          message: MESSAGE_TEXT.updateFaild,
+          status: STORE_STATUS.error,
+        })
+      );
     } finally {
       dispatch(setProductLoading(false));
     }
-  }
+  };
 
   return (
     <PlainLayout
@@ -117,15 +131,7 @@ const EditProductPage: React.FC = () => {
                 title: pagePaths.product,
               },
               {
-                title: (
-                  <Text>
-                    {
-                      location.pathname.split("/")[
-                        location.pathname.split("/").length - 1
-                      ]
-                    }
-                  </Text>
-                ),
+                title: <Text>{pagePaths.updateProduct}</Text>,
               },
             ]}
           />

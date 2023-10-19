@@ -75,7 +75,7 @@ const ProductCart = ({
           />
         }
         actions={[
-          <a href="#" key="detail">
+          <a href={`${pagePaths.product}/${pagePaths.productDetail}/${id}`} key="detail">
             Chi Tiết
           </a>,
           <EditOutlined

@@ -17,9 +17,9 @@ class ProductService {
     }
 
     // get detail product
-    static getDetailProduct = async (id: string, signal?: AbortSignal) => {
+    static getProductDetail = async (id: string, signal?: AbortSignal) => {
         return await http({
-            url: productPaths.getDetailProduct,
+            url: productPaths.getProductDetail,
             method: "GET",
             params: {
                 maSanPham: id

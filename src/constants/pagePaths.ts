@@ -10,7 +10,8 @@ const pagePaths = {
     menu: "menu",
     product: "product",
     addProduct: "addProduct",
-    updateProduct: "updateProduct"
+    updateProduct: "updateProduct",
+    productDetail: "ProductDetail"
 };
 
 export default pagePaths;

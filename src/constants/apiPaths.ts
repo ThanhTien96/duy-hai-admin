@@ -28,7 +28,7 @@ export const categoriesPaths = {
 
 export const productPaths = {
     getProductPagination: "/laySanPhamPhanTrang",
-    getDetailProduct: "/layChiTietSanPham",
+    getProductDetail: "/layChiTietSanPham",
     createProduct: "/themSanPham",
     updateProduct: "/capNhatSanPham",
     deleteProduct: "/xoaSanPham"
