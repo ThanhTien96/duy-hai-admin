@@ -107,7 +107,7 @@ const ProductForm = ({
             <InputNumber
             value={values.giaGoc && values.giaGoc > 0 ? values.giaGoc : undefined}
               addonAfter={CURRENCY.vnd}
-              onChange={(value) => {
+              onChange={(value: number) => {
                 setFieldValue("giaGoc", value);
                 !defaultValue && setFieldValue("giaGiam", value);
               }}
@@ -134,7 +134,7 @@ const ProductForm = ({
             <InputNumber
             value={values.tongSoLuong && values.tongSoLuong > 0 ? values.tongSoLuong : undefined}
               addonAfter={CURRENCY.vnd}
-              onChange={(value) => {
+              onChange={(value: number) => {
                 setFieldValue("tongSoLuong", value);
               }}
               placeholder="Nhập tổng số lượng"
@@ -148,8 +148,8 @@ const ProductForm = ({
           {/* categories */}
           <Form.Item required label="Danh Mục">
             <Select
-              value={values.maDanhMucNho}
-              onChange={(value) => setFieldValue("maDanhMucNho", value)}
+              value={values.maDanhMucNho.length > 0 ? values.maDanhMucNho : undefined}
+              onChange={(value: string) => setFieldValue("maDanhMucNho", value)}
               options={
                 subCategories &&
                 subCategories.map((subCate: ISubCategoriesFormBE) => ({
