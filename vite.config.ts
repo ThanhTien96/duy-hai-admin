@@ -13,6 +13,9 @@ export default defineConfig({
     open: true,
     host: true,
     port: 3000,
+    watch: {
+      usePolling: true
+    }
   },
   css: {
     preprocessorOptions: {
