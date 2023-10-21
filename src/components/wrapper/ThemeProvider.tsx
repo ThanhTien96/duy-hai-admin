@@ -2,7 +2,7 @@ import { useAppSelector } from "store";
 import { useMemo, useRef } from "react";
 import { themes } from "configs";
 import { Global } from "@emotion/react";
-import { ConfigProvider } from "antd";
+import { App, ConfigProvider } from "antd";
 export interface ThemeProviderProps {
   children?: React.ReactNode;
 }
@@ -49,8 +49,12 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
           },
         }}
       />
-      <ConfigProvider {...resProps} theme={selectedTheme}>
-        {children}
+      <ConfigProvider
+        {...resProps}
+        theme={selectedTheme}
+        getPopupContainer={() => modalContainerRef.current as HTMLElement}
+      >
+        <App>{children}</App>
       </ConfigProvider>
     </>
   );

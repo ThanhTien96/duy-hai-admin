@@ -3,7 +3,7 @@ import { ProductForm } from "../partials";
 import { Content } from "antd/es/layout/layout";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE, pagePaths } from "constants";
-import { useLocation, useNavigate, useParams } from "react-router";
+import {  useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "store";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -13,11 +13,12 @@ import { setProductLoading } from "store/common/product/product";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { TProductFormValue } from "../partials/ProductForm";
+import useHelmet from "hooks/useHelmet";
 
 const { Text } = Typography;
 
 const EditProductPage: React.FC = () => {
-  const location = useLocation();
+  useHelmet({title: "App - Cập Nhật Sản Phẩm"})
   const params = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

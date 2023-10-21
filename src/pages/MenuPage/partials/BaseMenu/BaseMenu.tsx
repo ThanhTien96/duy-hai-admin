@@ -365,7 +365,7 @@ const BaseMenu = ({ menu }: TBaseMenuProps) => {
                     <Tabs
                       tabPosition="left"
                       items={menu?.navlink.map(
-                        (ele: TNavLinkFromBE, i: number) => ({
+                        (ele: TNavLinkFromBE) => ({
                           label: (
                             <Space className="capitalize flex items-center justify-between gap-4 w-[250px]">
                               <Tooltip title={ele.tenNavLink}>
@@ -399,7 +399,7 @@ const BaseMenu = ({ menu }: TBaseMenuProps) => {
                           children:
                             ele.subLink.length > 0 ? (
                               ele.subLink.map(
-                                (subLink: TSubNavLinkFromBE, index: number) => (
+                                (subLink: TSubNavLinkFromBE) => (
                                   <Space
                                     key={subLink.id}
                                     className="py-4 flex items-center justify-between gap-8 w-full"

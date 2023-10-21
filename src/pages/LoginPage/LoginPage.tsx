@@ -84,7 +84,7 @@ function DefaultLoginForm() {
 
 export interface LoginPageProps {}
 
-const Page: React.FC<LoginPageProps> = (props) => {
+const Page: React.FC<LoginPageProps> = () => {
   return (
     <Layout className='flex items-center h-screen w-full justify-center'>
       <Content className='flex items-center'>

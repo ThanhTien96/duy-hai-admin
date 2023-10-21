@@ -1,4 +1,5 @@
 import {
+  DataProvider,
   HelmetProvider,
   MessageProvider,
   Router,
@@ -10,19 +11,19 @@ import "./styles/App.less";
 import { pagePaths } from "constants";
 
 function App() {
- 
-
   return (
     <StoreProvider>
-      <HelmetProvider>
-        <ThemeProvider>
-          <MessageProvider>
-            <SharedProvider>
-            <Router defaultRoute={pagePaths.home} />
-            </SharedProvider>
-          </MessageProvider>
-        </ThemeProvider>
-      </HelmetProvider>
+      <DataProvider>
+        <HelmetProvider>
+          <ThemeProvider>
+            <MessageProvider>
+              <SharedProvider>
+                <Router defaultRoute={pagePaths.home} />
+              </SharedProvider>
+            </MessageProvider>
+          </ThemeProvider>
+        </HelmetProvider>
+      </DataProvider>
     </StoreProvider>
   );
 }

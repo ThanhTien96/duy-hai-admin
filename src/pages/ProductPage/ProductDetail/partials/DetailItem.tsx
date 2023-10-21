@@ -1,25 +1,42 @@
-import { Typography,  } from 'antd'
-import { MediaBox } from 'components/shared';
-import { TImageMediaBox } from 'components/shared/MediaBox';
-import React from 'react'
-import { IProductMediaType } from 'types/Product';
-const {Title, Text} = Typography;
-type DetailItemProps = {
-    media?: IProductMediaType[];
-}
+import { Card, Divider, Typography } from "antd";
+import MediaBox, { TImageMediaBox } from "pages/ProductPage/ProductDetail/partials/MediaBox/MediaBox";
+import rehypeRaw from "rehype-raw";
+import { IProductMediaType } from "types/Product";
+import Markdown from 'react-markdown';
 
-const DetailItem = ({media}: DetailItemProps) => {
+const { Title} = Typography;
+
+type DetailItemProps = {
+  media?: IProductMediaType[];
+  markdownContent?: string;
+  onUpload?: (files: FileList) => void;
+};
+
+const DetailItem = ({ media, markdownContent, onUpload }: DetailItemProps) => {
   return (
     <div>
-        <div>
-            <MediaBox direction='horizontal' media={media ? media?.map<TImageMediaBox>((ele: IProductMediaType) => ({
-                id: ele.id,
-                src: ele.hinhAnh
-            })): [] } />
-        </div>
-        <Title level={3}></Title>
+      <div>
+        <MediaBox
+        onUpload={onUpload}
+          direction="horizontal"
+          media={
+            media
+              ? media?.map<TImageMediaBox>((ele: IProductMediaType) => ({
+                  id: ele.id,
+                  src: ele.hinhAnh,
+                  mainImage: ele.hinhChinh
+                }))
+              : []
+          }
+        />
+      </div>
+      <Card className="mt-8 rounded-none">
+        <Title level={5}>Chi Tiết Sản Phẩm</Title>
+        <Divider className="my-2" />
+        <Markdown rehypePlugins={[rehypeRaw]}>{markdownContent}</Markdown>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
-export default DetailItem
+export default DetailItem;

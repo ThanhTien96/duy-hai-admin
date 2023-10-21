@@ -1,10 +1,13 @@
 import {
   Badge,
+  Button,
   Card,
   Divider,
   Image,
   Popconfirm,
+  Popover,
   Space,
+  Tag,
   Tooltip,
   Typography,
 } from "antd";
@@ -14,12 +17,17 @@ import {
   SettingOutlined,
   EditOutlined,
   DeleteOutlined,
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
 } from "@ant-design/icons";
 import Calculator from "utils/calculator";
 import { useAppSelector } from "store";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { IProductPayloadType } from "types/Product";
+
 const { Meta } = Card;
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 export type TProductCartProps = {
   id: string;
@@ -33,6 +41,7 @@ export type TProductCartProps = {
   isHot?: boolean;
   isSEO?: boolean;
   onDelete?: () => void;
+  onUpdate?: (id: string, data: Partial<IProductPayloadType>) => void;
 };
 
 const ProductCart = ({
@@ -47,19 +56,24 @@ const ProductCart = ({
   isSEO,
   isHot,
   onDelete,
+  onUpdate,
 }: TProductCartProps) => {
   const { colorPrimary } = useAppSelector((state) => state.app.theme);
   const navigate = useNavigate();
+  const [popOpen, setPopOpen] = useState<boolean>(false);
+
   return (
     <Badge.Ribbon
       color={colorPrimary}
       text={
-        "- " +
-        Calculator.calcPercentDiscount(
-          originalPrice ?? 0,
-          overwritePrice ?? 0
-        ) +
-        " %"
+        originalPrice && overwritePrice && originalPrice > overwritePrice
+          ? "- " +
+            Calculator.calcPercentDiscount(
+              originalPrice ?? 0,
+              overwritePrice ?? 0
+            ) +
+            " %"
+          : "0%"
       }
     >
       <Card
@@ -67,17 +81,26 @@ const ProductCart = ({
         hoverable
         cover={
           <Image
+            onClick={() =>
+              navigate(`/${pagePaths.product}/${pagePaths.productDetail}/${id}`)
+            }
+            className="object-cover"
             loading="lazy"
-            height={200}
+            height={300}
             preview={false}
             alt={title ?? "product"}
             src={loading ? EMPTY_IMAGE : img ? img : EMPTY_IMAGE}
           />
         }
         actions={[
-          <a href={`${pagePaths.product}/${pagePaths.productDetail}/${id}`} key="detail">
+          <span
+            onClick={() =>
+              navigate(`/${pagePaths.product}/${pagePaths.productDetail}/${id}`)
+            }
+            key="detail"
+          >
             Chi Tiết
-          </a>,
+          </span>,
           <EditOutlined
             onClick={() =>
               navigate(`/${pagePaths.product}/${pagePaths.updateProduct}/${id}`)
@@ -94,17 +117,69 @@ const ProductCart = ({
           >
             <DeleteOutlined />
           </Popconfirm>,
-          <SettingOutlined key="setting" />,
+          <Popover
+            open={popOpen}
+            onOpenChange={() => setPopOpen(false)}
+            trigger={"click"}
+            content={
+              <Space direction="vertical">
+                <Button
+                  onClick={() => {
+                    setPopOpen(false);
+                    id && onUpdate && onUpdate(id, { hot: !isHot });
+                  }}
+                  className="w-full"
+                  type="default"
+                  icon={
+                    isHot ? <CloudDownloadOutlined /> : <CloudUploadOutlined />
+                  }
+                >
+                  Đổi Hot thành {isHot ? "Không" : "Có"}
+                </Button>
+                <Button
+                  onClick={() => {
+                    id && onUpdate && onUpdate(id, { seo: !isSEO });
+                    setPopOpen(false);
+                  }}
+                  icon={
+                    isSEO ? <CloudDownloadOutlined /> : <CloudUploadOutlined />
+                  }
+                  className="w-full"
+                  type="default"
+                >
+                  Đổi SEO Thành {isSEO ? "Không" : "Có"}
+                </Button>
+              </Space>
+            }
+          >
+            <SettingOutlined
+              onClick={() => setPopOpen(!popOpen)}
+              key="setting"
+            />
+          </Popover>,
         ]}
       >
         <Meta
           title={
-            <Tooltip title={title}>
-              {title ? truncateText(title, 20) : "None Titile"}
-            </Tooltip>
+            <Title
+              onClick={() =>
+                navigate(
+                  `/${pagePaths.product}/${pagePaths.productDetail}/${id}`
+                )
+              }
+              level={5}
+              className="hover:text-red-500 transition-all duration-300"
+            >
+              {" "}
+              {title ? truncateText(title, 40) : "None Titile"}
+            </Title>
           }
           description={
-            description ? truncateText(description, 40) : "None description."
+            <Tooltip title={description}>
+              {description
+                ? truncateText(description, 50)
+                : "None description."}
+            </Tooltip>
           }
         />
         <Space direction="horizontal" className="mt-3">
@@ -124,9 +199,34 @@ const ProductCart = ({
           }
         />
         <Divider className="my-4" />
-        <Space className="justify-between">
-          <Meta description={`Public: ${isHot ? "Có" : "Không"}`} />
-          <Meta description={`SEO: ${isSEO ? "Có" : "Không"}`} />
+        <Space className="justify-between gap-8">
+          {/* HOT */}
+          <Text>
+            Hot:{" "}
+            {isHot ? (
+              <Tag color="green-inverse" className="ml-4">
+                Có
+              </Tag>
+            ) : (
+              <Tag color="red-inverse" className="ml-4">
+                Không
+              </Tag>
+            )}
+          </Text>
+
+          {/* SEO */}
+          <Text>
+            SEO:{" "}
+            {isSEO ? (
+              <Tag color="green-inverse" className="ml-4">
+                Có
+              </Tag>
+            ) : (
+              <Tag color="red-inverse" className="ml-4">
+                Không
+              </Tag>
+            )}
+          </Text>
         </Space>
       </Card>
     </Badge.Ribbon>

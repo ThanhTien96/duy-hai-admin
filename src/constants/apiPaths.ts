@@ -31,5 +31,10 @@ export const productPaths = {
     getProductDetail: "/layChiTietSanPham",
     createProduct: "/themSanPham",
     updateProduct: "/capNhatSanPham",
-    deleteProduct: "/xoaSanPham"
+    deleteProduct: "/xoaSanPham",
+    addImageToProduct: "/themHinhAnhSanPham",
+    changeBaseImage: "/hinhChinh",
+    updateImageProduct: "/capNhatHinhSanPham",
+    deleteImageProduct: "/xoaHinhAnhSanPham",
+    updateProductWithoutImage: "/capNhatSanPhamKhongHinh"
 }

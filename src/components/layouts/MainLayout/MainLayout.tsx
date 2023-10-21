@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import {
@@ -12,8 +12,6 @@ import { useLocation, useNavigate } from "react-router";
 const { Header, Sider, Content } = Layout;
 import "./AppLayout.style.less";
 import { pagePaths } from "constants";
-import { useAppDispatch } from "store";
-import { thunkFetchSubCategories } from "store/common/menu/menuAsyncThunk";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -24,16 +22,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = theme.useToken();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const controller = new AbortController();
-    dispatch(thunkFetchSubCategories(controller.signal));
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
+  
   // handle navigate
   const handleNavigate = ({ key: path }: { key: React.Key }) => {
     navigate(path as string);

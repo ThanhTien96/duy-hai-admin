@@ -1,6 +1,6 @@
 import { Col, InputNumber, Row, Slider } from "antd";
 import { CURRENCY } from "constants";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type TSliderInputProps = {
   defaultVal?: number;

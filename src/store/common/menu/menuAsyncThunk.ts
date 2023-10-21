@@ -23,7 +23,7 @@ export const thunkFetMainCategories = createAsyncThunk(
 // fetch sub categories
 export const thunkFetchSubCategories = createAsyncThunk(
   "menuSlice/fetchSubCategories",
-  async (signal: AbortSignal, thunkApi) => {
+  async (signal: AbortSignal) => {
     const res = await CategoriesService.getAllSubCategories(signal);
     return res.data.data;
   }

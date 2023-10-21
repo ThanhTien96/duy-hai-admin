@@ -1,7 +1,7 @@
 import { Button, Space, Typography } from "antd";
 import { SettingSection } from "pages/SettingPage/partials";
 import React from "react";
-const { Text, Link, Title } = Typography;
+const { Text, Link } = Typography;
 
 export interface IAccountSettingProps {}
 

@@ -1,4 +1,4 @@
-import { Col, Row, Spin } from "antd";
+import { Col, Row } from "antd";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT } from "constants";
 import useHelmet from "hooks/useHelmet";

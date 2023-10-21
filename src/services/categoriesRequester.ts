@@ -14,13 +14,14 @@ class CategoriesService {
     } 
 
     // get detail main categories
-    static getDetailMainCategories = async (id: string, singnal?: AbortSignal) => {
+    static getDetailMainCategories = async (id: string, signal?: AbortSignal) => {
         return await http({
             url: categoriesPaths.getDetailMainCategories,
             method: "GET",
             params: {
                 maDanhMucChinh: id
-            }
+            },
+             signal,
         })
     }
 

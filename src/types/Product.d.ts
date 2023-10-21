@@ -1,3 +1,4 @@
+import { ISubCategoriesFormBE } from "./Menu";
 
 export interface IProductPagination {
   total: number;
@@ -8,6 +9,7 @@ export interface IProductPagination {
 export interface IProductMediaType {
   readonly id: string;
   hinhAnh: string;
+  hinhChinh: boolean;
 }
 
 export interface IProductFromBE {
@@ -34,4 +36,26 @@ export interface IProductFromBE {
   comment: any[];
   danhGia: any[];
   donHang: any[];
+}
+
+// PRODUCT DETAIL TYPE
+
+export interface IProductDetailFromBE extends IProductFromBE {
+  danhMucNho: ISubCategoriesFormBE;
+}
+
+
+// update type
+export interface IProductPayloadType {
+  tenSanPham: string;
+  moTa: string;
+  moTaNgan: string;
+  giaGoc: number;
+  giaGiam: number;
+  seoTitle: string;
+  seoDetail: string;
+  tongSoLuong: number;
+  maDanhMucNho : string;
+  hot: boolean;
+  seo: boolean
 }

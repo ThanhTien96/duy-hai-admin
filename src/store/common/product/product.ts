@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { thunkFetchProductPagination } from "./productAsyncThunk";
-import { IProductFromBE, IProductPagination } from "types/Product";
+import { thunkFetchProductDetail, thunkFetchProductPagination } from "./productAsyncThunk";
+import { IProductDetailFromBE, IProductFromBE, IProductPagination } from "types/Product";
 
 export interface IProductSliceProps {
   productList: IProductFromBE[];
   pagination?: IProductPagination;
   loading: boolean;
+  productDetail?: IProductDetailFromBE;
 }
 
 const initialState: IProductSliceProps = {
   productList: [],
+  productDetail: undefined,
   loading: false,
   pagination: undefined,
 };
@@ -30,11 +32,7 @@ const productSlice = createSlice({
       thunkFetchProductPagination.fulfilled,
       (state, { payload }) => {
         state.loading = false;
-        if (state.productList.length <= 0) {
-          state.productList = payload.data;
-        } else {
-          state.productList = state.productList.concat(payload.data);
-        }
+        state.productList = payload.data;
         state.pagination = {
           currentPage: payload.currentPage,
           total: payload.total,
@@ -43,6 +41,16 @@ const productSlice = createSlice({
       }
     );
     builder.addCase(thunkFetchProductPagination.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(thunkFetchProductDetail.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(thunkFetchProductDetail.fulfilled, (state,  {payload}) => {
+      state.loading = false;
+      state.productDetail = payload;
+    });
+    builder.addCase(thunkFetchProductDetail.rejected, (state) => {
       state.loading = false;
     });
   },

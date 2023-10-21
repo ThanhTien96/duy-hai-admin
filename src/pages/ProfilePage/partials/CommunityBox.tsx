@@ -1,5 +1,4 @@
 import { Typography, Button, List, Avatar, Card } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 import { SearchIcon } from "lib/icons";
 
 const { Title } = Typography;

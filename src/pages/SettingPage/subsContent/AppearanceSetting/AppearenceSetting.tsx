@@ -1,6 +1,6 @@
-import { Card, Image, Radio, Slider, Space, Switch, Typography } from "antd";
+import { Card, Image, Radio, Space, Switch, Typography } from "antd";
 import { SettingSection } from "pages/SettingPage/partials";
-import React, { useState } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "store";
 import { changeColorPrimary, changeTheme } from "store/app/theme";
 import { CirclePicker, ColorResult } from "react-color";
@@ -26,7 +26,7 @@ const themeList = [
 const AppearencePage: React.FC<IAppearencePageProps> = () => {
   const { selected, colorPrimary } = useAppSelector((state) => state.app.theme);
   const dispatch = useAppDispatch();
-  const [hex, setHex] = useState("#fff");
+  // const [hex, setHex] = useState("#fff");
   // handle change theme
   const handleChangeTheme = (themeKey: string) =>
     dispatch(changeTheme(themeKey));

@@ -1,4 +1,4 @@
-import React,  {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useAppSelector } from "store";
 import { App, message as _message } from "antd";
 
@@ -13,16 +13,20 @@ const MessageProvider = (props: IMessageProviderProps) => {
     error: _message.error,
     warning: _message.warning,
     info: _message.info,
-    success: _message.success
+    success: _message.success,
   };
 
   useEffect(() => {
-    if(message !== "N/A") {
-        messageOptions[status](message, 0.9);
+    if (message !== "N/A") {
+      messageOptions[status](message, 0.9);
     }
-  }, [logs])
-  
-  return <App>{props.children}</App>;
+  }, [logs]);
+
+  return (
+    <App>
+      {props.children}
+    </App>
+  );
 };
 
 export default MessageProvider;

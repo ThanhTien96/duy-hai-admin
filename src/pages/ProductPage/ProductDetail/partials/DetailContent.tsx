@@ -1,24 +1,30 @@
-import { Card, Divider, Space, Typography } from 'antd'
-import React from 'react'
-import Markdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
+import { Button, Card, Divider, Flex, Space, Typography } from "antd";
+import TableProduct from "./TableProduct";
+import { IProductDetailFromBE } from "types/Product";
+import { useNavigate } from "react-router";
+import { pagePaths } from "constants";
 
-const {Title} = Typography;
+const { Title, Text } = Typography;
 
 type LeftContentProps = {
-    markdownContent?: string;
-}
+  data?: IProductDetailFromBE;
+};
 
-const LeftContent = ({markdownContent}: LeftContentProps) => {
+const LeftContent = ({ data }: LeftContentProps) => {
+  const navigate = useNavigate()
   return (
-    <Card className='rounded-none'>
-        <Space direction='vertical'>
-            <Title level={3}>Chi Tiết Sản Phẩm</Title>
-            <Divider className='my-2' />
-            <Markdown rehypePlugins={[rehypeRaw]}>{markdownContent}</Markdown>
-        </Space>
+    <Card className="rounded-none">
+      <Space direction="vertical" className="w-full">
+        <Flex align="center" justify="space-between">
+          <Title level={4}>{data?.tenSanPham}</Title>
+          <Button onClick={() => navigate(`/${pagePaths.product}/${pagePaths.updateProduct}/${data?.maSanPham}`)} type="primary">Chỉnh Sửa</Button>
+        </Flex>
+        <Divider className="my-0" />
+        <Text>{data?.moTaNgan}</Text>
+        <TableProduct product={data} />
+      </Space>
     </Card>
-  )
-}
+  );
+};
 
-export default LeftContent
+export default LeftContent;

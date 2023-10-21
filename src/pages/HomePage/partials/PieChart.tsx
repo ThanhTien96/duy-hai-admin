@@ -71,7 +71,7 @@ const PieChart = () => {
           color: colorPrimary,
         },
         offsetY: -4,
-        customHtml: (container, view, datum) => {
+        customHtml: (container, _, datum) => {
           const { width, height } = container.getBoundingClientRect();
           const d = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
           const text = datum ? datum.type : "Total";
@@ -86,7 +86,7 @@ const PieChart = () => {
           fontSize: "18px",
           color: colorPrimary,
         },
-        customHtml: (container, view, datum, xdata) => {
+        customHtml: (container, _, datum, xdata) => {
           const { width } = container.getBoundingClientRect();
           const text = datum
             ? `¥ ${datum.value}`

@@ -13,9 +13,11 @@ import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { setProductLoading } from "store/common/product/product";
 import { ProductService } from "services/productRequester";
 import { thunkFetchProductPagination } from "store/common/product/productAsyncThunk";
+import useHelmet from "hooks/useHelmet";
 const { Text } = Typography;
 
 const AddProductPage: React.FC = () => {
+  useHelmet({title: "App - Thêm Sản Phẩm"})
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const AddProductPage: React.FC = () => {
             status: STORE_STATUS.success,
           })
         );
-        dispatch(thunkFetchProductPagination({ page: 1, perPage: 8 }));
+        dispatch(thunkFetchProductPagination({ page: 1}));
         navigate(`/${pagePaths.product}`);
       }
     } catch (err: Error | any) {
