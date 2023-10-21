@@ -28,7 +28,9 @@ export default defineConfig({
     alias: [{ find: /^~/, replacement: "" }],
   },
   plugins: [
-    react(),
+    react({
+      include: "**/*.tsx",
+    }),
     tsconfigPaths(),
     vitePluginSvgr({
       svgrOptions: {
