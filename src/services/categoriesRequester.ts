@@ -117,6 +117,4 @@ class CategoriesService {
     } 
 }
 
-export {
-    CategoriesService
-}
+export default CategoriesService

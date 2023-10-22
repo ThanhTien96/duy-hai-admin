@@ -10,6 +10,8 @@ import { Avatar, Button, Divider, Popover, Space, Typography } from "antd";
 import { useNavigate } from "react-router";
 import { pagePaths } from "constants";
 import clsx from "clsx";
+import { useAppDispatch } from "store";
+import { userLogout } from "store/common/auth/authSlice";
 
 const { Text } = Typography;
 
@@ -51,6 +53,7 @@ const Menu = ({ items }: MenuProps) => {
 
 const AccountButton = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     // handle navigate
     const handleNavigate = (slug: string) => {
@@ -80,7 +83,8 @@ const AccountButton = () => {
       key: "logout",
       label: "Logout",
       icon: <LogoutOutlined />,
-      className: 'text-red-500'
+      className: 'text-red-500',
+      onClick: () => dispatch(userLogout())
     },
   ];
 

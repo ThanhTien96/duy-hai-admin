@@ -38,3 +38,8 @@ export const productPaths = {
     deleteImageProduct: "/xoaHinhAnhSanPham",
     updateProductWithoutImage: "/capNhatSanPhamKhongHinh"
 }
+
+export const authPaths = {
+    login: "/dangNhap",
+    fetchProfile: "/layThongTinTaiKhoan"
+}

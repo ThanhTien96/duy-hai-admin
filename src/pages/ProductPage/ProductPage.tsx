@@ -20,7 +20,7 @@ import { useLocation } from "react-router";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { setProductLoading } from "store/common/product/product";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import useHelmet from "hooks/useHelmet";
 
 const { Text } = Typography;

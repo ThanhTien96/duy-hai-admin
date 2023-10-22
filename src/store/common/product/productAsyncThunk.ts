@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import { TGetAxiosResponseClient } from "types/AxiosClient";
 import { IProductDetailFromBE, IProductFromBE } from "types/Product";
 

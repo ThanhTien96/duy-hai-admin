@@ -2,7 +2,7 @@ import { Button, Modal, Popconfirm, Space } from "antd";
 import React, { useState } from "react";
 import { CodeFilled, EditFilled, DeleteFilled } from "@ant-design/icons";
 import { UploadImage } from "components/shared";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import { useAppDispatch } from "store";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";

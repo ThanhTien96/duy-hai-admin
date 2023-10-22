@@ -2,6 +2,7 @@
  * The provider to call api on the top 
  */
 
+
 import React, {useEffect} from "react";
 import { useAppDispatch } from "store";
 import { thunkFetchSubCategories } from "store/common/menu/menuAsyncThunk";
@@ -11,7 +12,7 @@ type DataProviderProps = {
 };
 
 const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch(); 
 
   useEffect(() => {
     const controller = new AbortController();

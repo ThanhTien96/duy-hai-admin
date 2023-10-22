@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "store";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { IProductFromBE } from "types/Product";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import { setProductLoading } from "store/common/product/product";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";

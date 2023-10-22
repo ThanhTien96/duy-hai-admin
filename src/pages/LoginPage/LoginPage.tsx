@@ -9,6 +9,7 @@ import {
   Space,
   Checkbox,
   Divider,
+  Spin,
 } from "antd";
 import {
   GithubOutlined,
@@ -17,65 +18,82 @@ import {
   LoginOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { TUserLoginValue } from "types/Auth";
+import * as yup from "yup";
+import { useAppDispatch, useAppSelector } from "store";
+import { setAlert } from "store/app/alert";
+import { STORE_STATUS } from "constants/apiMessage";
+import { AuthService } from "services";
+import { STATUS_CODE, pagePaths } from "constants";
+import { thunkFetchProfile } from "store/common/auth/authAsyncThunk";
 
 const { Content } = Layout;
 const { Text, Title, Link } = Typography;
 
-function DefaultLoginForm() {
-  const navigate = useNavigate();
-  const handleLogin = () => navigate("home");
+function DefaultLoginForm({
+  onSubmit,
+}: {
+  onSubmit?: (value: TUserLoginValue) => void;
+}) {
+  const formik = useFormik({
+    initialValues: {
+      taiKhoan: "",
+      matKhau: "",
+    },
+    validationSchema: yup.object({
+      taiKhoan: yup.string().required("Vui lòng nhập tài khoản!"),
+      matKhau: yup.string().required("Vui lòng nhập mật khẩu!"),
+    }),
+    onSubmit: (value: TUserLoginValue) => {
+      onSubmit && onSubmit(value);
+    },
+  });
+
+  const { handleChange, handleSubmit, errors, touched } = formik;
 
   return (
     <Form
-      name='normal_login'
-      className='login-form'
+      onSubmitCapture={handleSubmit}
+      name="normal_login"
+      className="login-form"
       initialValues={{ remember: true, username: "admin", password: "admin" }}
     >
-      <Form.Item
-        name='username'
-        rules={[
-          {
-            required: true,
-            message: "Please input your Username!",
-          },
-        ]}
-      >
+      <Form.Item>
         <Input
-          prefix={<UserOutlined className='site-form-item-icon' />}
-          placeholder='Username'
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Tài Khoản"
+          name="taiKhoan"
+          onChange={handleChange}
         />
-      </Form.Item>
-      <Form.Item
-        name='password'
-        rules={[
-          {
-            required: true,
-            message: "Please input your Password!",
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className='site-form-item-icon' />}
-          type='password'
-          placeholder='Password'
-        />
+        {errors.taiKhoan && touched.taiKhoan && (
+          <p className="text-red-500">{errors.taiKhoan}</p>
+        )}
       </Form.Item>
       <Form.Item>
-        <Form.Item name='remember' valuePropName='checked' noStyle>
-          <Checkbox>Remember me</Checkbox>
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Mật Khẩu"
+          name="matKhau"
+          onChange={handleChange}
+        />
+        {errors.matKhau && touched.matKhau && (
+          <p className="text-red-500">{errors.matKhau}</p>
+        )}
+      </Form.Item>
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Nhớ Tài Khoản</Checkbox>
         </Form.Item>
 
-        <Link className='login-form-forgot' href=''>
-          Forgot password
+        <Link className="login-form-forgot" href="">
+          Quên mật khẩu
         </Link>
       </Form.Item>
       <Form.Item>
-        <Button
-          htmlType='submit'
-          className='login-form-butto w-full'
-          onClick={handleLogin}
-        >
-          Log in
+        <Button htmlType="submit" className="login-form-butto w-full">
+          Đăng Nhập
         </Button>
       </Form.Item>
     </Form>
@@ -85,57 +103,91 @@ function DefaultLoginForm() {
 export interface LoginPageProps {}
 
 const Page: React.FC<LoginPageProps> = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading } = useAppSelector(state => state.common.auth)
+  
+  // handle login
+  const handleLogin = async (value: TUserLoginValue) => {
+    try {
+      const res = await AuthService.userLogin(value);
+      if (res.status === STATUS_CODE.success) {
+        localStorage.setItem("access_token", res.data.data.token);
+        localStorage.setItem("refresh_token", res.data.data.refreshToken);
+        localStorage.setItem("expired_at", res.data.data.expiredAt);
+        if (localStorage.getItem("access_token")) {
+          await dispatch(thunkFetchProfile());
+          dispatch(
+            setAlert({
+              message: "Đăng Nhập Thành Công!",
+              status: STORE_STATUS.success,
+            })
+          );
+          navigate(`/${pagePaths.home}`);
+        }
+      }
+    } catch (err: Error | any) {
+      dispatch(
+        setAlert({
+          message: err.response.data.message ?? "Đăng Nhập Thất Bại!",
+          status: STORE_STATUS.error,
+        })
+      );
+    }
+  };
   return (
-    <Layout className='flex items-center h-screen w-full justify-center'>
-      <Content className='flex items-center'>
-        <Space direction='vertical'>
-          <Title level={2} className='text-center'>
-            Project Name
-          </Title>
-          <Divider className='my-0'>
-            <Text type='secondary' className='text-center'>
-              The world's largest event tracking platform
-            </Text>
-          </Divider>
-          <Tabs
-            defaultActiveKey='1'
-            centered
-            className='h-[280px] w-[400px]'
-            items={[
-              {
-                key: "1",
-                label: (
-                  <span>
-                    <LoginOutlined />
-                    Default
-                  </span>
-                ),
-                children: <DefaultLoginForm />,
-              },
-              {
-                key: "2",
-                label: (
-                  <span>
-                    <GithubOutlined />
-                    Github
-                  </span>
-                ),
-                children: <>hello</>,
-              },
-            ]}
-          />
-          <Divider className='my-0'>
-            <Text type='secondary' className='text-center'>
-              Our contacts
-            </Text>
-          </Divider>
-          <div className='flex flex-row items-center gap-4 justify-center'>
-            <Button shape='circle' icon={<GithubOutlined />} />
-            <Button shape='circle' icon={<TwitterOutlined />} />
-            <Button shape='circle' icon={<FacebookOutlined />} />
-          </div>
-        </Space>
-      </Content>
+    <Layout className="flex items-center h-screen w-full justify-center">
+      <Spin spinning={loading}>
+        <Content className="flex items-center ">
+          <Space direction="vertical" className="p-8">
+            <Title level={2} className="text-center">
+              Project Name
+            </Title>
+            <Divider className="my-0">
+              <Text type="secondary" className="text-center">
+                The world's largest event tracking platform
+              </Text>
+            </Divider>
+            <Tabs
+              defaultActiveKey="1"
+              centered
+              className="h-[280px] w-[450px]"
+              items={[
+                {
+                  key: "1",
+                  label: (
+                    <span>
+                      <LoginOutlined />
+                      Default
+                    </span>
+                  ),
+                  children: <DefaultLoginForm onSubmit={handleLogin} />,
+                },
+                {
+                  key: "2",
+                  label: (
+                    <span>
+                      <GithubOutlined />
+                      Github
+                    </span>
+                  ),
+                  children: <>hello</>,
+                },
+              ]}
+            />
+            <Divider className="my-0">
+              <Text type="secondary" className="text-center">
+                Our contacts
+              </Text>
+            </Divider>
+            <div className="flex flex-row items-center gap-4 justify-center">
+              <Button shape="circle" icon={<GithubOutlined />} />
+              <Button shape="circle" icon={<TwitterOutlined />} />
+              <Button shape="circle" icon={<FacebookOutlined />} />
+            </div>
+          </Space>
+        </Content>
+      </Spin>
     </Layout>
   );
 };

@@ -23,7 +23,7 @@ import { TCategoriesFormValue } from "./partials/MainCategoriesForm";
 import { Content } from "antd/es/layout/layout";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
-import { CategoriesService } from "services/categoriesRequester";
+import { CategoriesService } from "services";
 import { thunkFetMainCategories } from "store/common/menu/menuAsyncThunk";
 import { setMenuPageLoading } from "store/common/menu/menu";
 import SubCategoriesForm, {

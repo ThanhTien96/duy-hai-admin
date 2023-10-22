@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CategoriesService } from "services/categoriesRequester";
+import { CategoriesService } from "services";
 import MenuService from "services/menuRequester";
 
 // fetch menu

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "store";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { setProductLoading } from "store/common/product/product";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import { thunkFetchProductPagination } from "store/common/product/productAsyncThunk";
 import useHelmet from "hooks/useHelmet";
 const { Text } = Typography;

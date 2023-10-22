@@ -132,6 +132,4 @@ class ProductService {
     }
 }
 
-export {
-    ProductService
-}
+export default ProductService;

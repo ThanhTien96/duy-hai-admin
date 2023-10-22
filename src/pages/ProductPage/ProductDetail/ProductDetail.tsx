@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "store";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
-import { ProductService } from "services/productRequester";
+import { ProductService } from "services";
 import { DetailContent, DetailItem } from "./partials";
 import { Content } from "antd/es/layout/layout";
 import useHelmet from "hooks/useHelmet";
