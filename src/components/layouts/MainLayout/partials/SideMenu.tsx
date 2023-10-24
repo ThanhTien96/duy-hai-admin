@@ -6,6 +6,7 @@ import {
     ShoppingFilled,
     ShopFilled,
     AppstoreAddOutlined,
+    MacCommandOutlined,
 } from '@ant-design/icons'
 
 export type MenuItem = Required<MenuProps>['items'][number];
@@ -33,6 +34,7 @@ const items: MenuItem[] = [
         getItem("All Product", pagePaths.product, <ShoppingFilled />),
         getItem("Add Product", `${pagePaths.product}/${pagePaths.addProduct}`, <AppstoreAddOutlined />),
     ]),    
+    getItem('News', pagePaths.news, <MacCommandOutlined />)
 ];
 
 

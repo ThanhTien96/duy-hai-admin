@@ -27,6 +27,7 @@ const EditProduct = React.lazy(
 const ProductDetail = React.lazy(
   () => import("pages/ProductPage/ProductDetail")
 );
+const Post = React.lazy(() => import('pages/PostPage'))
 
 const extendedRoutes: RouteObject[] = [
   {
@@ -83,6 +84,10 @@ const extendedRoutes: RouteObject[] = [
         element: <ProductDetail />,
       },
     ],
+  },
+  {
+    path: pagePaths.news,
+    element: <Post />
   },
 ];
 

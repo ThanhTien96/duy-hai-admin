@@ -11,7 +11,8 @@ const pagePaths = {
     product: "product",
     addProduct: "addProduct",
     updateProduct: "updateProduct",
-    productDetail: "ProductDetail"
+    productDetail: "ProductDetail",
+    news: '/news'
 };
 
 export default pagePaths;

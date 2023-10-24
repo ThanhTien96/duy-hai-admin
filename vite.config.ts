@@ -13,9 +13,6 @@ export default defineConfig({
     open: true,
     host: true,
     port: 3000,
-    watch: {
-      usePolling: true
-    }
   },
   css: {
     preprocessorOptions: {
@@ -28,9 +25,7 @@ export default defineConfig({
     alias: [{ find: /^~/, replacement: "" }],
   },
   plugins: [
-    react({
-      include: "**/*.tsx",
-    }),
+    react(),
     tsconfigPaths(),
     vitePluginSvgr({
       svgrOptions: {

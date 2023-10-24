@@ -10,3 +10,4 @@ export {default as LoginPage} from './LoginPage';
 export {default as SettingPage} from './SettingPage';
 export {default as MenuPage} from './MenuPage';
 export {default as ProductPage} from './ProductPage';
+export {default as PostPage} from './PostPage';

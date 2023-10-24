@@ -17,7 +17,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
         })
     }
   return (
-    <AntDrawer {...props} open={state.drawer.open} onClose={handleClose}/>
+    <AntDrawer {...props} open={state.drawer.open} onClose={handleClose} children={props.children}/>
   )
 }
 

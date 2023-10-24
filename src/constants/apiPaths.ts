@@ -43,3 +43,9 @@ export const authPaths = {
     login: "/dangNhap",
     fetchProfile: "/layThongTinTaiKhoan"
 }
+
+
+export const newsPaths = {
+    getAllNewsType: "/layLoaiTinTuc",
+    createNewsType: "/themLoaiTinTuc"
+}

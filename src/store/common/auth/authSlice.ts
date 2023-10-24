@@ -12,7 +12,7 @@ export interface IAuthSliceType {
 
 const initialState: IAuthSliceType = {
     loading: false,
-    status: IS_AUTH.unAuth,
+    status: IS_AUTH.auth,
     profile: undefined,
 };
 
