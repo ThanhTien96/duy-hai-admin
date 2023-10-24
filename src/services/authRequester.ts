@@ -22,6 +22,15 @@ class AuthService {
             signal,
         })
     } 
+
+    // get token
+    static getToken = async (signal?: AbortSignal) => {
+        return await http({
+            url: authPaths.getToken,
+            method: "GET",
+            signal,
+        })
+    }
 }
 
 export default AuthService;

@@ -41,11 +41,14 @@ export const productPaths = {
 
 export const authPaths = {
     login: "/dangNhap",
-    fetchProfile: "/layThongTinTaiKhoan"
+    fetchProfile: "/layThongTinTaiKhoan",
+    getToken: "/layToken"
 }
 
 
 export const newsPaths = {
     getAllNewsType: "/layLoaiTinTuc",
-    createNewsType: "/themLoaiTinTuc"
+    createNewsType: "/themLoaiTinTuc",
+    updateNewsType: "/capNhatLoaiTinTuc",
+    deleteNewsType: "/xoaLoaiTinTuc"
 }

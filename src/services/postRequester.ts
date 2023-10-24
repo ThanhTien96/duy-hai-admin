@@ -19,6 +19,30 @@ class PostService {
             signal
         })
     }
+
+    // update news type
+    static updateNewsType = async (id: string, data: {loaiTinTuc: string}, signal?: AbortSignal) => {
+        return await http({
+            url: newsPaths.updateNewsType,
+            method: "PUT",
+            data,
+            params: {
+                maLoaiTinTuc: id
+            },
+            signal
+        })
+    }
+    // delete news type
+    static deleteNewsType = async (id: string, signal?: AbortSignal) => {
+        return await http({
+            url: newsPaths.deleteNewsType,
+            method: "DELETE",
+            params: {
+                maLoaiTinTuc: id
+            },
+            signal
+        })
+    }
 }
 
 export default PostService;

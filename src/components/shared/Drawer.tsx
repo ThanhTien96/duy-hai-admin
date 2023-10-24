@@ -6,6 +6,7 @@ import { Drawer as AntDrawer ,DrawerProps } from 'antd';
 const Drawer: React.FC<DrawerProps> = (props) => {
     const [state, setState] =  useContext(SharedContext);
 
+    
     const handleClose: DrawerProps["onClose"] = (e) => {
         props.onClose && props.onClose(e);
         setState({
@@ -17,7 +18,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
         })
     }
   return (
-    <AntDrawer {...props} open={state.drawer.open} onClose={handleClose} children={props.children}/>
+    <AntDrawer {...props} open={state.drawer.open} onClose={handleClose}/>
   )
 }
 

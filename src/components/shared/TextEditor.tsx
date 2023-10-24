@@ -4,10 +4,11 @@ import { useAppSelector } from "store";
 export type TTextEditorProps = {
   onChange: (value: string) => void;
   height?: number;
+  width?: number | string;
   defaultValue?: string;
 };
 
-const TextEditor = ({ onChange, height, defaultValue }: TTextEditorProps) => {
+const TextEditor = ({ onChange, height, defaultValue, width }: TTextEditorProps) => {
   const { selected } = useAppSelector((state) => state.app.theme);
 
   return (
@@ -20,7 +21,7 @@ const TextEditor = ({ onChange, height, defaultValue }: TTextEditorProps) => {
           statusbar: false,
           borderRadius: 0,
           height: height ?? 500,
-          width: "100%",
+          width: width ?? "100%",
           menubar: true,
           content_css: selected,
           skin: selected === "dark" ? "oxide-dark" : "oxide",

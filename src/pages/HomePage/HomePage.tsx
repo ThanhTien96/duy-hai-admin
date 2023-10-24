@@ -1,24 +1,71 @@
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
+import { ColumnChart, PieChart, TinyChart, WatchTable } from "./partials";
 import {
-  ColumnChart,
-  PieChart,
-  TinyChart,
-  WatchTable,
-} from "./partials";
-import { Button, Calendar, Card, Col, Row, Segmented } from "antd";
+  Button,
+  Calendar,
+  Card,
+  Col,
+  Row,
+  Segmented,
+  Tooltip,
+  Typography,
+} from "antd";
 import {
   ReloadOutlined,
   ExpandOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { COPY_RIGHT } from "constants";
+import { COPY_RIGHT, STATUS_CODE } from "constants";
+import { AuthService } from "services";
+import { setAlert } from "store/app/alert";
+import { STORE_STATUS } from "constants/apiMessage";
+import { useState, useCallback } from "react";
+import { useAppDispatch } from "store";
+import { CopyFilled } from "@ant-design/icons";
+
+const { Text } = Typography;
 
 const HomePage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const [isCoppy, setIsCoppy] = useState<boolean>(false);
+  // handle get token
+  const handleGetToken = useCallback(
+    async () => {
+      try {
+        const res = await AuthService.getToken();
+        if (res.status === STATUS_CODE.success) {
+          // copy value
+          await navigator.clipboard.writeText(res.data.token);
+          setIsCoppy(true);
+          setTimeout(() => setIsCoppy(false), 1000);
+        }
+      } catch (err: Error | any) {
+        dispatch(
+          setAlert({ message: "Coppy faild", status: STORE_STATUS.success })
+        );
+      }
+    },
+    [],
+  )
+  ;
   return (
     <PlainLayout
       headerprops={{
         title: "Dashboard",
         extra: [
+          <Tooltip
+          key={'nonti-copied'}
+            title={
+              <div className="flex items-center gap-2">
+                <CopyFilled />
+                <Text>Copied</Text>
+              </div>
+            }
+            trigger="click"
+            open={isCoppy}
+          >
+            <Button onClick={handleGetToken}>Lấy Token</Button>
+          </Tooltip>,
           <Button type="text" key="reload-btn" icon={<ReloadOutlined />} />,
           <Button type="text" key="expand-btn" icon={<ExpandOutlined />} />,
         ],

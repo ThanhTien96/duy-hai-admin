@@ -1,5 +1,5 @@
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { Breadcrumb, Button, Col, Flex, Row, Spin, Typography } from "antd";
 import { COPY_RIGHT, STATUS_CODE } from "constants";
 import React, { useContext, createContext, useState } from "react";
@@ -7,12 +7,9 @@ import { HomeOutlined, AppstoreAddOutlined } from "@ant-design/icons";
 import { Content } from "antd/es/layout/layout";
 import { Drawer } from "components/shared";
 import SharedContext from "components/wrapper/SharedProvider/SharedContext";
-import { useAppDispatch } from "store";
-import { setAlert } from "store/app/alert";
-import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
-import { PostService } from "services";
-import { NewsType } from "./partials";
+import { NewsForm, NewsType } from "./partials";
 import { INewsTypeFormBE } from "types/Post";
+import { PostService } from "services";
 const { Text } = Typography;
 
 export interface IPostState {
@@ -29,56 +26,34 @@ export const PostContext = createContext<TPostContextProvider>(null as any);
 
 const PostPage: React.FC = () => {
   const controller = new AbortController();
-
-  const dispatch = useAppDispatch();
   const [state, setState] = useContext(SharedContext);
+  console.log("☣️ >>> state: ", state)
   const [post, setPost] = useState<IPostState>({
     newsTypeList: [],
     pageLoading: false,
   });
 
   // fetch new type
-  const handleFetchNewsType = async (signal?: AbortSignal) => {
-    try {
-      const res = await PostService.getAllNewsType(signal);
-      console.log("☣️ >>> handleFetchNewsType >>> res: ", res);
-      if (res.status === STATUS_CODE.success) {
-        setPost({ ...post, newsTypeList: res.data.data });
+  const handleFetchNewsType = useCallback(
+    async (signal?: AbortSignal) => {
+      try {
+        const res = await PostService.getAllNewsType(signal);
+        if (res.status === STATUS_CODE.success) {
+          setPost({ ...post, newsTypeList: res.data.data });
+        }
+      } catch (err) {
+        /* empty */
       }
-    } catch (err) {
-      /* empty */
-    }
-  };
+    },
+    [],
+  )
+  ;
 
   useEffect(() => {
     handleFetchNewsType(controller.signal);
   }, []);
 
-  // handle create news type
-  const handleCreateNewsType = async (data: { loaiTinTuc: string }) => {
-    setPost({ ...post, pageLoading: true });
-    try {
-      const res = await PostService.createNewsType(data, controller.signal);
-      if (res.status === STATUS_CODE.success) {
-        dispatch(
-          setAlert({
-            message: MESSAGE_TEXT.createSuccess,
-            status: STORE_STATUS.success,
-          })
-        );
-        handleFetchNewsType(controller.signal);
-      }
-    } catch (err: Error | any) {
-      dispatch(
-        setAlert({
-          message: err.response.data.message ?? MESSAGE_TEXT.createFaild,
-          status: STORE_STATUS.error,
-        })
-      );
-    } finally {
-      setPost({ ...post, pageLoading: false });
-    }
-  };
+  
 
   return (
     <PlainLayout
@@ -106,7 +81,7 @@ const PostPage: React.FC = () => {
                 ]}
               />
               <Button
-                onClick={() => setState({ drawer: { open: true } })}
+                onClick={() => setState({...state, drawer: {open: true}})}
                 type="primary"
                 icon={<AppstoreAddOutlined />}
               >
@@ -118,12 +93,13 @@ const PostPage: React.FC = () => {
             <Row gutter={[32, 32]}>
               {/* Column left */}
               <Col span={24} xl={6}>
-                <NewsType onCreateNewsType={handleCreateNewsType} />
+                <NewsType fetchNewsType={handleFetchNewsType} />
               </Col>
+              <Col span={24} xl={6}></Col>
             </Row>
 
             {/* Drawer */}
-            <Drawer open={true} />
+            <Drawer width={"40%"} children={<NewsForm />} open={true} />
           </Content>
         </Spin>
       </PostContext.Provider>

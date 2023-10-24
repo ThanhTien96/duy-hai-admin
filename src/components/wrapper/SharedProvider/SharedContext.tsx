@@ -1,15 +1,15 @@
 import { DrawerProps } from "antd";
-import * as React from 'react';
+import * as React from "react";
 
-export interface IContextValue {
-    drawer: DrawerProps;
+export interface ContextValue {
+  drawer: DrawerProps;
 }
 
-export type TSharedContextValueType = [
-    IContextValue,
-    React.Dispatch<React.SetStateAction<IContextValue>>
+export type SharedContextValueType = [
+  ContextValue,
+  React.Dispatch<React.SetStateAction<ContextValue>>
 ];
 
-const Context = React.createContext<TSharedContextValueType>(null as any);
+const Context = React.createContext<SharedContextValueType>(null as any);
 
 export default Context;

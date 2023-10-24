@@ -10,7 +10,7 @@ import { Avatar, Button, Divider, Popover, Space, Typography } from "antd";
 import { useNavigate } from "react-router";
 import { pagePaths } from "constants";
 import clsx from "clsx";
-import { useAppDispatch } from "store";
+import { useAppDispatch, useAppSelector } from "store";
 import { userLogout } from "store/common/auth/authSlice";
 
 const { Text } = Typography;
