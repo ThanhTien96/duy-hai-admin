@@ -27,7 +27,6 @@ export const PostContext = createContext<TPostContextProvider>(null as any);
 const PostPage: React.FC = () => {
   const controller = new AbortController();
   const [state, setState] = useContext(SharedContext);
-  console.log("☣️ >>> state: ", state)
   const [post, setPost] = useState<IPostState>({
     newsTypeList: [],
     pageLoading: false,
@@ -81,7 +80,7 @@ const PostPage: React.FC = () => {
                 ]}
               />
               <Button
-                onClick={() => setState({...state, drawer: {open: true}})}
+                onClick={() => setState({...state, open: true})}
                 type="primary"
                 icon={<AppstoreAddOutlined />}
               >
@@ -99,7 +98,7 @@ const PostPage: React.FC = () => {
             </Row>
 
             {/* Drawer */}
-            <Drawer width={"40%"} children={<NewsForm />} open={true} />
+            <Drawer width={"40%"} ><NewsForm /></Drawer>
           </Content>
         </Spin>
       </PostContext.Provider>

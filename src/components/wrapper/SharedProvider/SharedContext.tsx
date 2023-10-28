@@ -3,6 +3,7 @@ import * as React from "react";
 
 export interface ContextValue {
   drawer: DrawerProps;
+  open: boolean;
 }
 
 export type SharedContextValueType = [
