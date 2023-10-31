@@ -1,7 +1,6 @@
 import { NoAuthorizedPage } from 'pages';
 import React from 'react'
-import { useNavigate } from 'react-router';
-import { StoreState, useAppDispatch, useAppSelector } from 'store'
+import { StoreState, useAppSelector } from 'store'
 
 type PrivateRouteProps = {
     renderIfTrue: (state: StoreState) => boolean;

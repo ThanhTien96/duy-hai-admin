@@ -42,7 +42,7 @@ const MediaBox = ({
   }, []);
 
   // sort data if media choosed change it to first one
-  const previewImg = media.sort((it: TImageMediaBox, is: TImageMediaBox) => {
+  const previewImg = media.sort((it: TImageMediaBox) => {
     if(it.id === indexSrc?.id) {
       return -1
     } else {

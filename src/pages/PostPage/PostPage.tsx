@@ -113,7 +113,7 @@ const PostPage: React.FC = () => {
   const handleDeleteNews = async (id: string) => {
     dispatch(setNewsLoading(true));
     try {
-      const res = await PostService.deleteNews(id, controller.signal);
+      const res = await PostService.deleteNews(id);
 
       if(res.status === STATUS_CODE.success) {
         dispatch(setAlert({message: MESSAGE_TEXT.deleteSuccess, status: STORE_STATUS.success}));
