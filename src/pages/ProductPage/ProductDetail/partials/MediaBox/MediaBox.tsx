@@ -41,6 +41,16 @@ const MediaBox = ({
     setIndexSrc(media);
   }, []);
 
+  // sort data if media choosed change it to first one
+  const previewImg = media.sort((it: TImageMediaBox, is: TImageMediaBox) => {
+    if(it.id === indexSrc?.id) {
+      return -1
+    } else {
+      return 1
+    }
+  })
+
+
   return (
     <Flex vertical={direction === "vertical" ? true : false} gap={8}>
       <App
@@ -114,7 +124,7 @@ const MediaBox = ({
       </App>
       <div className={clsx("w-full")}>
         <Image.PreviewGroup
-          items={media && media.map((img: TImageMediaBox) => img.src)}
+          items={media && indexSrc && previewImg.map(ele => ele.src)}
         >
           <Image
             rootClassName="w-full"

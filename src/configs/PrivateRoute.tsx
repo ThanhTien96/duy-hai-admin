@@ -1,11 +1,7 @@
-import { pagePaths } from 'constants';
-import { STORE_STATUS } from 'constants/apiMessage';
 import { NoAuthorizedPage } from 'pages';
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router';
 import { StoreState, useAppDispatch, useAppSelector } from 'store'
-import { setAlert } from 'store/app/alert';
-import { thunkFetchProfile } from 'store/common/auth/authAsyncThunk';
 
 type PrivateRouteProps = {
     renderIfTrue: (state: StoreState) => boolean;
@@ -15,8 +11,6 @@ type PrivateRouteProps = {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({renderIfTrue, children, fallbackComponent = <NoAuthorizedPage />}) => {
   const store = useAppSelector(store => store);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   // const handleFetchProfile = async () => {
   //   try {

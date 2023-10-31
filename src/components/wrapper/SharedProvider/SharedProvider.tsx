@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Context, { IContextValue } from './SharedContext';
+import Context from './SharedContext';
 import { Drawer } from 'components/shared';
 
 
@@ -9,7 +9,7 @@ export interface ISharedProviderProps {
 
 function SharedProvider(props: ISharedProviderProps) {
 
-    const states = useState<IContextValue>({
+    const states = useState<any>({
         drawer: {},
     })
 

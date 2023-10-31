@@ -8,8 +8,7 @@ import {
   Space,
   Tag,
 } from "antd";
-import { useContext, useState } from "react";
-import { PostContext } from "../PostPage";
+import { useState } from "react";
 import { PlusOutlined, SettingFilled } from "@ant-design/icons";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "store";
@@ -17,25 +16,27 @@ import { PostService } from "services";
 import { STATUS_CODE } from "constants";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { setAlert } from "store/app/alert";
+import { setNewsLoading } from "store/common/news/newsSlice";
+import { thunkFetchNewsType } from "store/common/news/newsAsyncThunk";
 
 type NewsTypeProps = {
   className?: string;
-  fetchNewsType?: (signal?: AbortSignal) => void;
+
 };
 
-const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
+const NewsType = ({ className }: NewsTypeProps) => {
   const dispatch = useAppDispatch();
   const controller = new AbortController();
   const [openSetting, setOpenSetting] = useState<string>("");
-  const [post, setPost] = useContext(PostContext);
   const [addType, setAddType] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [update, setUpdate] = useState<string>();
+  const {newsType} = useAppSelector(state => state.common.news)
 
   // action
   // handle create news type
   const handleCreateNewsType = async (data: { loaiTinTuc: string }) => {
-    setPost({ ...post, pageLoading: true });
+    dispatch(setNewsLoading(true))
     try {
       const res = await PostService.createNewsType(data, controller.signal);
       if (res.status === STATUS_CODE.success) {
@@ -45,7 +46,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
             status: STORE_STATUS.success,
           })
         );
-        fetchNewsType && fetchNewsType(controller.signal);
+        dispatch(thunkFetchNewsType())
       }
     } catch (err: Error | any) {
       dispatch(
@@ -55,7 +56,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
         })
       );
     } finally {
-      setPost({ ...post, pageLoading: false });
+      dispatch(setNewsLoading(false))
     }
   };
 
@@ -64,7 +65,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
     id: string,
     data: { loaiTinTuc: string }
   ) => {
-    setPost({ ...post, pageLoading: true });
+    dispatch(setNewsLoading(true))
     try {
       const res = await PostService.updateNewsType(id, data);
       if (res.status === STATUS_CODE.success) {
@@ -74,7 +75,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
             status: STORE_STATUS.success,
           })
         );
-        fetchNewsType && fetchNewsType(controller.signal);
+        dispatch(thunkFetchNewsType())
       }
     } catch (err: Error | any) {
       dispatch(
@@ -84,13 +85,13 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
         })
       );
     } finally {
-      setPost({ ...post, pageLoading: false });
+      dispatch(setNewsLoading(false))
     }
   };
 
   // handle delete news type
   const handleDeleteNewsType = async (id: string) => {
-    setPost({ ...post, pageLoading: true });
+    dispatch(setNewsLoading(true))
     try {
       const res = await PostService.deleteNewsType(id);
       if (res.status === STATUS_CODE.success) {
@@ -100,7 +101,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
             status: STORE_STATUS.success,
           })
         );
-        fetchNewsType && fetchNewsType(controller.signal);
+        dispatch(thunkFetchNewsType())
       }
     } catch (err: Error | any) {
       dispatch(
@@ -110,7 +111,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
         })
       );
     } finally {
-      setPost({ ...post, pageLoading: false });
+      dispatch(setNewsLoading(false))
     }
   };
 
@@ -118,11 +119,11 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
     <Card
       size="small"
       title={"Loại Tin Tức"}
-      className={clsx("w-full", className)}
+      className={clsx("w-full rounded-md", className)}
     >
-      {post && post.newsTypeList && post.newsTypeList.length > 0 ? (
+      {newsType && newsType.length > 0 ? (
         <Space direction="vertical" className="w-full">
-          {post.newsTypeList?.map((ele) => (
+          {newsType?.map((ele) => (
             <div
               key={ele.maLoaiTinTuc}
               className="border border-solid border-gray-400 p-2 flex items-center rounded-md cursor-pointer hover:border-gray-300"
@@ -205,7 +206,7 @@ const NewsType = ({ className, fetchNewsType }: NewsTypeProps) => {
               >
                 <Button
                   onClick={() => setOpenSetting(openSetting.length > 0 ? "" : ele.maLoaiTinTuc )}
-                  icon={<SettingFilled className={`hover:text-red-500`} />}
+                  icon={<SettingFilled />}
                 />
               </Popover>
             </div>

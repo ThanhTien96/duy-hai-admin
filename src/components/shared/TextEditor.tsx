@@ -6,13 +6,14 @@ export type TTextEditorProps = {
   height?: number;
   width?: number | string;
   defaultValue?: string;
+  className?: string;
 };
 
-const TextEditor = ({ onChange, height, defaultValue, width }: TTextEditorProps) => {
+const TextEditor = ({ onChange, height, defaultValue, width, className }: TTextEditorProps) => {
   const { selected } = useAppSelector((state) => state.app.theme);
 
   return (
-    <>
+    <div className={className}>
       <Editor
         apiKey="wumtctoa4zi0a1l66upxgydpoqz6d9jqqw9d26a862f6gfia"
         onEditorChange={onChange}
@@ -57,7 +58,7 @@ const TextEditor = ({ onChange, height, defaultValue, width }: TTextEditorProps)
             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px}",
         }}
       />
-    </>
+    </div>
   );
 };
 
