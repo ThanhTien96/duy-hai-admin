@@ -55,3 +55,18 @@ export const newsPaths = {
   updateNews: "/capNhatTinTuc",
   deleteNews: "/xoaTinTuc",
 };
+
+export const bannerPaths = {
+  getAll: "/layDanhSachBanner",
+  createBanner: "/themBanner",
+  updateBanner: "/api/capNhatBanner",
+  deleteBanner: "/xoaBanner",
+};
+
+export const youtubePaths = {
+  getAll: "/layDanhSachYT",
+  getDetail: "/chiTietYT",
+  create: "/themYT",
+  update: "/capNhatYT",
+  delete: "/xoaYT",
+};

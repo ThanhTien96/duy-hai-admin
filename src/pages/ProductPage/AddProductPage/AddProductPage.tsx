@@ -1,4 +1,4 @@
-import { Breadcrumb, Card, Spin, Typography } from "antd";
+import {  Card, Spin, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE, pagePaths } from "constants";
@@ -17,14 +17,13 @@ import useHelmet from "hooks/useHelmet";
 const { Text } = Typography;
 
 const AddProductPage: React.FC = () => {
-  useHelmet({title: "App - Thêm Sản Phẩm"})
+  useHelmet({ title: "App - Thêm Sản Phẩm" });
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  //  store 
-  const {loading} = useAppSelector((state) => state.common.product);
-  const {subCategoriesList} = useAppSelector((state) => state.common.menu);
- 
+  //  store
+  const { loading } = useAppSelector((state) => state.common.product);
+  const { subCategoriesList } = useAppSelector((state) => state.common.menu);
 
   /****** ACTION HANDLER ******/
   // handle create product
@@ -34,7 +33,8 @@ const AddProductPage: React.FC = () => {
     formData.append("tenSanPham", values.tenSanPham);
     formData.append("giaGoc", String(values.giaGoc));
     values.giaGiam > 0 && formData.append("giaGiam", String(values.giaGiam));
-    values.tongSoLuong > 0 && formData.append("tongSoLuong", String(values.tongSoLuong));
+    values.tongSoLuong > 0 &&
+      formData.append("tongSoLuong", String(values.tongSoLuong));
     formData.append("moTa", values.moTa);
     formData.append("moTaNgan", values.moTaNgan);
     formData.append("maDanhMucNho", values.maDanhMucNho);
@@ -57,7 +57,7 @@ const AddProductPage: React.FC = () => {
             status: STORE_STATUS.success,
           })
         );
-        dispatch(thunkFetchProductPagination({ page: 1}));
+        dispatch(thunkFetchProductPagination({ page: 1 }));
         navigate(`/${pagePaths.product}`);
       }
     } catch (err: Error | any) {
@@ -74,7 +74,32 @@ const AddProductPage: React.FC = () => {
 
   return (
     <PlainLayout
-      headerprops={{ title: "Thêm Sản Phẩm" }}
+      headerprops={{
+        breadcrumb: {
+          items: [
+            {
+              href: "/",
+              title: <HomeOutlined />,
+            },
+            {
+              href: `/${pagePaths.product}`,
+              title: pagePaths.product,
+            },
+            {
+              title: (
+                <Text>
+                  {
+                    location.pathname.split("/")[
+                      location.pathname.split("/").length - 1
+                    ]
+                  }
+                </Text>
+              ),
+            },
+          ],
+        },
+        title: "Thêm Sản Phẩm",
+      }}
       footerprops={{
         children: COPY_RIGHT,
         className: "text-center",
@@ -83,30 +108,6 @@ const AddProductPage: React.FC = () => {
     >
       <Spin spinning={loading}>
         <Content className="px-8">
-          <Breadcrumb
-            className="mb-4"
-            items={[
-              {
-                href: "/",
-                title: <HomeOutlined />,
-              },
-              {
-                href: `/${pagePaths.product}`,
-                title: pagePaths.product,
-              },
-              {
-                title: (
-                  <Text>
-                    {
-                      location.pathname.split("/")[
-                        location.pathname.split("/").length - 1
-                      ]
-                    }
-                  </Text>
-                ),
-              },
-            ]}
-          />
           <Card className="rounded-none">
             <ProductForm
               getFormValue={(value) => handlCreateProduct(value)}

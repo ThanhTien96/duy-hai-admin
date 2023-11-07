@@ -6,8 +6,16 @@ import React, { useEffect } from "react";
 import { BaseMenu, CategoryBox } from "./partials";
 import { useAppDispatch, useAppSelector } from "store";
 import { thunkFetMainCategories, thunkFetchMenu } from "store/common/menu/menuAsyncThunk";
+import { useLocation } from "react-router";
+import { Typography } from "antd";
+import {
+  HomeOutlined,
+} from "@ant-design/icons"
+
+const { Text } = Typography;
 
 const MenuPage: React.FC = () => {
+  const location = useLocation();
   useHelmet({
     title: "Duy Hai - Menu",
   });
@@ -21,6 +29,17 @@ const MenuPage: React.FC = () => {
   return (
     <PlainLayout
       headerprops={{
+        breadcrumb: {
+          items: [
+            {
+              href: "/",
+              title: <HomeOutlined />,
+            },
+            {
+              title: <Text>{location.pathname.replace("/", "")}</Text>,
+            },
+          ]
+        },
         title: "Trang Menu",
       }}
       footerprops={{

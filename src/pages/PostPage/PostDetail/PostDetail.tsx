@@ -1,5 +1,4 @@
 import {
-  Breadcrumb,
   Button,
   Card,
   Col,
@@ -143,16 +142,8 @@ const PostDetail: React.FC = () => {
   return (
     <PlainLayout
       headerprops={{
-        title: "Trang Chi Tiết Tin Tức",
-      }}
-      footerprops={{ children: COPY_RIGHT, className: "text-center " }}
-      className="bg-inherit"
-    >
-      <Flex justify="space-between">
-        {/* navigator */}
-        <Breadcrumb
-          className="mb-4"
-          items={[
+        breadcrumb: {
+          items: [
             {
               href: "/",
               title: <HomeOutlined />,
@@ -164,8 +155,14 @@ const PostDetail: React.FC = () => {
             {
               title: <Text>{location.pathname.split("/")[2]}</Text>,
             },
-          ]}
-        />
+          ]
+        },
+        title: "Trang Chi Tiết Tin Tức",
+      }}
+      footerprops={{ children: COPY_RIGHT, className: "text-center " }}
+      className="bg-inherit"
+    >
+      <Flex justify="end">
         <Button
           onClick={() => {
             dispatch({ type: NewsReducerEnum.OPEN_DRAWER, payload: true });

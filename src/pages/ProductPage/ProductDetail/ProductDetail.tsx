@@ -1,7 +1,7 @@
-import { Breadcrumb, Col, Row, Spin, Typography } from "antd";
+import { Col, Row, Spin, Typography } from "antd";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE, pagePaths } from "constants";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { HomeOutlined } from "@ant-design/icons";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "store";
@@ -19,17 +19,19 @@ const ProductDetail: React.FC = () => {
   useHelmet({ title: "App - Chi Tiết Sản Phẩm" });
   const params = useParams();
   const dispatch = useAppDispatch();
-  const {productDetail, loading} = useAppSelector(state => state.common.product)
+  const { productDetail, loading } = useAppSelector(
+    (state) => state.common.product
+  );
 
   // side effects
   useEffect(() => {
-   params.id && dispatch(thunkFetchProductDetail(params.id))
+    params.id && dispatch(thunkFetchProductDetail(params.id));
   }, []);
 
-   /**** ACTION HANDLER *****/
+  /**** ACTION HANDLER *****/
   // action upload image
   const hadleAddMedia = async (files: FileList) => {
-    dispatch(setProductLoading(true))
+    dispatch(setProductLoading(true));
 
     const formData = new FormData();
     if (files && files.length > 0) {
@@ -49,7 +51,7 @@ const ProductDetail: React.FC = () => {
               status: STORE_STATUS.success,
             })
           );
-          params.id && dispatch(thunkFetchProductDetail(params.id))
+          params.id && dispatch(thunkFetchProductDetail(params.id));
         }
       }
     } catch (err: Error | any) {
@@ -60,25 +62,15 @@ const ProductDetail: React.FC = () => {
         })
       );
     } finally {
-      dispatch(setProductLoading(false))
+      dispatch(setProductLoading(false));
     }
   };
 
-  
-
   return (
     <PlainLayout
-      headerprops={{ title: "Chi Tiết Sản Phẩm" }}
-      footerprops={{
-        children: COPY_RIGHT,
-        className: "text-center",
-      }}
-      className="bg-inherit h-auto"
-    >
-      <Content className="px-8">
-        <Breadcrumb
-          className="mb-4"
-          items={[
+      headerprops={{
+        breadcrumb: {
+          items: [
             {
               href: "/",
               title: <HomeOutlined />,
@@ -90,8 +82,17 @@ const ProductDetail: React.FC = () => {
             {
               title: <Text>{pagePaths.productDetail}</Text>,
             },
-          ]}
-        />
+          ],
+        },
+        title: "Chi Tiết Sản Phẩm",
+      }}
+      footerprops={{
+        children: COPY_RIGHT,
+        className: "text-center",
+      }}
+      className="bg-inherit h-auto"
+    >
+      <Content className="px-8">
         <Spin spinning={loading}>
           <Row gutter={[64, 64]}>
             {/* left */}

@@ -44,7 +44,7 @@ const NewsItem = ({
           okText="Có"
           cancelText="Không"
           >
-            <Button danger>
+            <Button size="small" danger>
               Xoá
             </Button>
           </Popconfirm>

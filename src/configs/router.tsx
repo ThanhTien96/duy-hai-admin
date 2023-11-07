@@ -27,8 +27,9 @@ const EditProduct = React.lazy(
 const ProductDetail = React.lazy(
   () => import("pages/ProductPage/ProductDetail")
 );
-const Post = React.lazy(() => import('pages/PostPage'));
-const PostDetail = React.lazy(() => import('pages/PostPage/PostDetail'));
+const Post = React.lazy(() => import("pages/PostPage"));
+const PostDetail = React.lazy(() => import("pages/PostPage/PostDetail"));
+const YoutubeBanner = React.lazy(() => import("pages/YoutubeBannerPage"));
 
 const extendedRoutes: RouteObject[] = [
   {
@@ -91,14 +92,18 @@ const extendedRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        path: '',
+        path: "",
         element: <Post />,
       },
       {
         path: `${pagePaths.newsDetail}/:id`,
-        element: <PostDetail />
-      }
-    ]
+        element: <PostDetail />,
+      },
+    ],
+  },
+  {
+    path: pagePaths.youtubePost,
+    element: <YoutubeBanner />,
   },
 ];
 

@@ -1,5 +1,4 @@
 import {
-  Breadcrumb,
   Col,
   Empty,
   Pagination,
@@ -113,17 +112,9 @@ const ProductPage: React.FC = () => {
 
   return (
     <PlainLayout
-      headerprops={{ title: "Product page" }}
-      footerprops={{
-        children: COPY_RIGHT,
-        className: "text-center",
-      }}
-      className="bg-inherit h-auto"
-    >
-      <Content className="px-8">
-        <Breadcrumb
-          className="mb-4"
-          items={[
+      headerprops={{
+        breadcrumb: {
+          items: [
             {
               href: "/",
               title: <HomeOutlined />,
@@ -131,8 +122,17 @@ const ProductPage: React.FC = () => {
             {
               title: <Text>{location.pathname.replace("/", "")}</Text>,
             },
-          ]}
-        />
+          ],
+        },
+        title: "Trang Sản Phẩm",
+      }}
+      footerprops={{
+        children: COPY_RIGHT,
+        className: "text-center",
+      }}
+      className="bg-inherit h-auto"
+    >
+      <Content className="px-8">
         <Spin spinning={loading}>
           {productList && productList.length > 0 ? (
             <Row gutter={[24, 32]}>
@@ -165,7 +165,7 @@ const ProductPage: React.FC = () => {
                 })}
             </Row>
           ) : (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
           {productList && productList.length > 0 && (
             <div className="mt-8 text-center">

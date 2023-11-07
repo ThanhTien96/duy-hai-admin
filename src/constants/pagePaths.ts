@@ -13,7 +13,8 @@ const pagePaths = {
     updateProduct: "updateProduct",
     productDetail: "ProductDetail",
     news: 'news',
-    newsDetail: 'newDetail'
+    newsDetail: 'newDetail',
+    youtubePost: 'youtubePost'
 };
 
 export default pagePaths;

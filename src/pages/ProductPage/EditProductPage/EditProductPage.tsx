@@ -1,9 +1,9 @@
-import { Breadcrumb, Card, Spin, Typography } from "antd";
+import { Card, Spin, Typography } from "antd";
 import { ProductForm } from "../partials";
 import { Content } from "antd/es/layout/layout";
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE, pagePaths } from "constants";
-import {  useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "store";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ import useHelmet from "hooks/useHelmet";
 const { Text } = Typography;
 
 const EditProductPage: React.FC = () => {
-  useHelmet({title: "App - Cập Nhật Sản Phẩm"})
+  useHelmet({ title: "App - Cập Nhật Sản Phẩm" });
   const params = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -111,7 +111,24 @@ const EditProductPage: React.FC = () => {
 
   return (
     <PlainLayout
-      headerprops={{ title: "" }}
+      headerprops={{
+        breadcrumb: {
+          items: [
+            {
+              href: "/",
+              title: <HomeOutlined />,
+            },
+            {
+              href: `/${pagePaths.product}`,
+              title: pagePaths.product,
+            },
+            {
+              title: <Text>{pagePaths.updateProduct}</Text>,
+            },
+          ],
+        },
+        title: "Cập Nhật Sản Phẩm",
+      }}
       footerprops={{
         children: COPY_RIGHT,
         className: "text-center",
@@ -120,22 +137,6 @@ const EditProductPage: React.FC = () => {
     >
       <Spin spinning={loading}>
         <Content className="px-8">
-          <Breadcrumb
-            className="mb-4"
-            items={[
-              {
-                href: "/",
-                title: <HomeOutlined />,
-              },
-              {
-                href: `/${pagePaths.product}`,
-                title: pagePaths.product,
-              },
-              {
-                title: <Text>{pagePaths.updateProduct}</Text>,
-              },
-            ]}
-          />
           <Card className="rounded-none">
             <ProductForm
               defaultValue={detailProduct}
