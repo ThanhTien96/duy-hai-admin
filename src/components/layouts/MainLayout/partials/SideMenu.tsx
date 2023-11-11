@@ -7,7 +7,8 @@ import {
     ShopFilled,
     AppstoreAddOutlined,
     MacCommandOutlined,
-    YoutubeFilled
+    YoutubeFilled,
+    UserOutlined
 } from '@ant-design/icons'
 
 export type MenuItem = Required<MenuProps>['items'][number];
@@ -29,14 +30,15 @@ const getItem = (
 }
 
 const items: MenuItem[] = [
-    getItem('Dash Board', pagePaths.home, <ProjectOutlined />),    
+    getItem('Trang Chủ', pagePaths.home, <ProjectOutlined />),    
     getItem('Menu', pagePaths.menu, <WindowsOutlined />),    
-    getItem('Product', pagePaths.product + "-index", <ShopFilled />, [
-        getItem("All Product", pagePaths.product, <ShoppingFilled />),
-        getItem("Add Product", `${pagePaths.product}/${pagePaths.addProduct}`, <AppstoreAddOutlined />),
+    getItem('Sản Phẩm', pagePaths.product + "-index", <ShopFilled />, [
+        getItem("Tất Cả Sản Phẩm", pagePaths.product, <ShoppingFilled />),
+        getItem("Thêm Sản Phẩm", `${pagePaths.product}/${pagePaths.addProduct}`, <AppstoreAddOutlined />),
     ]),    
-    getItem('News', pagePaths.news, <MacCommandOutlined />),
-    getItem('Youtube / Banner', pagePaths.youtubePost, <YoutubeFilled />)
+    getItem('Tin Tức', pagePaths.news, <MacCommandOutlined />),
+    getItem('Youtube - Banner', pagePaths.youtubePost, <YoutubeFilled />),
+    getItem('Người Dùng', pagePaths.user, <UserOutlined />),
 ];
 
 

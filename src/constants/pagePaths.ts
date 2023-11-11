@@ -14,7 +14,8 @@ const pagePaths = {
     productDetail: "ProductDetail",
     news: 'news',
     newsDetail: 'newDetail',
-    youtubePost: 'youtubePost'
+    youtubePost: 'youtubePost',
+    user: 'user',
 };
 
 export default pagePaths;

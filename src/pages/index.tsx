@@ -12,3 +12,4 @@ export { default as MenuPage } from "./MenuPage";
 export { default as ProductPage } from "./ProductPage";
 export { default as PostPage } from "./PostPage";
 export { default as YoutubeBannerPage } from "./YoutubeBannerPage";
+export { default as UserPage } from './UserPage';

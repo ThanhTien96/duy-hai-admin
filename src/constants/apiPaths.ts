@@ -70,3 +70,11 @@ export const youtubePaths = {
   update: "/capNhatYT",
   delete: "/xoaYT",
 };
+
+export const userPaths = {
+  getAllUserType: '/layLoaiNguoiDung',
+  getDetailUserType: '/layMotLoaiNguoiDung',
+  createUserType: '/themLoaiNguoiDung',
+  updateUserType: '/capNhatLoaiNguoiDung',
+  deleteUserType: '/xoaLoaiNguoiDung',
+}

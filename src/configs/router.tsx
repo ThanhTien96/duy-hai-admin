@@ -30,6 +30,7 @@ const ProductDetail = React.lazy(
 const Post = React.lazy(() => import("pages/PostPage"));
 const PostDetail = React.lazy(() => import("pages/PostPage/PostDetail"));
 const YoutubeBanner = React.lazy(() => import("pages/YoutubeBannerPage"));
+const User = React.lazy(() => import('pages/UserPage'))
 
 const extendedRoutes: RouteObject[] = [
   {
@@ -105,6 +106,10 @@ const extendedRoutes: RouteObject[] = [
     path: pagePaths.youtubePost,
     element: <YoutubeBanner />,
   },
+  {
+    path: pagePaths.user,
+    element: <User />
+  }
 ];
 
 const routes: RouteObject[] = [

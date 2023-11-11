@@ -1,5 +1,5 @@
 import { useContext, useState, useCallback, useEffect } from "react";
-import { EYoutubeBanner, YoutubeBanerContext } from "../YoutubeBannerPage";
+import { YoutubeBanerContext } from "../YoutubeBannerPage";
 import { Col, Drawer, Empty, Modal, Row } from "antd";
 import { IYoutubePostFromBE } from "types/YoutubeBanner";
 import YoutubePostCard from "./YoutubePostCard";
@@ -9,6 +9,7 @@ import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
 import { useAppDispatch } from "store";
 import { YoutubeBannerService } from "services";
 import { STATUS_CODE } from "constants";
+import { EYoutubeBanner } from "constants/enum.constant";
 
 type TYoutubePostProps = {
   handleFetchYoutube: (signal?: AbortSignal) => void;
@@ -121,7 +122,32 @@ const YoutubePost = ({ handleFetchYoutube }: TYoutubePostProps) => {
     }
   } 
 
-  
+  const handleUpdateYoutube = useCallback(async (id: string, data: IYoutubeFormValue) => {
+    dispatch({type: EYoutubeBanner.LOADING, payload: true});
+    const formData = new FormData();
+    formData.append('tieuDe', data.tieuDe);
+    formData.append('url', data.url);
+    formData.append('embedLink', data.embedLink);
+    if(data.hinhAnh) {
+      data.hinhAnh.forEach((ele: any) => {
+
+        formData.append('hinhAnh', ele.originFileObj);
+      })
+    }
+    try {
+      const response = await YoutubeBannerService.updateYoutube(id, formData, controller.signal);
+      if(response.status === STATUS_CODE.success) {
+        storeDispatch(setAlert({message: MESSAGE_TEXT.createSuccess, status: STORE_STATUS.success}));
+        handleFetchYoutube(controller.signal);
+        dispatch({type: EYoutubeBanner.YOUTUBE_DRAWER, payload: false});
+        dispatch({type: EYoutubeBanner.YOUTUBE_DETAIL, payload: undefined});
+      }
+    } catch (err: Error | any) {
+      storeDispatch(setAlert({message: err.response.data.message ?? MESSAGE_TEXT.updateFaild, status: STORE_STATUS.error}));
+    } finally {
+      dispatch({type: EYoutubeBanner.LOADING, payload: false});
+    }
+  },[])
 
   return (
     <Row gutter={[16, 16]}>
@@ -170,11 +196,21 @@ const YoutubePost = ({ handleFetchYoutube }: TYoutubePostProps) => {
         }}
         open={state.youtubeDrawer}
       >
-        <YoutubeForm
+        {state.youtubeDetail ? (
+          <YoutubeForm
           defaultValue={state.youtubeDetail}
           resetForm={state.youtubeDrawer}
-          onSubmit={(value) => handleCreateYoutubePost(value)}
+          onSubmit={(value) => {
+            if(state.youtubeDetail) {
+              handleUpdateYoutube(state?.youtubeDetail?.maYT, value)
+            }
+          }}
         />
+        ) :(<YoutubeForm
+          defaultValue={state.youtubeDetail}
+          resetForm={state.youtubeDrawer}
+          onSubmit={(value) =>  handleCreateYoutubePost(value)}
+        />)}
       </Drawer>
     </Row>
   );

@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { Empty, Image, Modal, Popconfirm, UploadFile } from "antd";
-import { EYoutubeBanner, YoutubeBanerContext } from "../YoutubeBannerPage";
+import { YoutubeBanerContext } from "../YoutubeBannerPage";
 import { IBannerFormBE } from "types/YoutubeBanner";
 import { useAppDispatch } from "store";
 import { setAlert } from "store/app/alert";
@@ -11,6 +11,7 @@ import { YoutubeBannerService } from "services";
 import { STATUS_CODE } from "constants";
 import { UploadImage } from "components/shared";
 import { DeleteFilled } from "@ant-design/icons";
+import { EYoutubeBanner } from "constants/enum.constant";
 
 type TBannerProps = {
   handleFetchBanner: (signal?: AbortSignal) => void;

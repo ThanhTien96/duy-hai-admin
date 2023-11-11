@@ -51,12 +51,7 @@ const YoutubeForm = ({
         .matches(
           /^https:\/\/www\.youtube\.com\/embed\//,
           'Link phải bắt đầu bằng: "https://www.youtube.com/embed/"'
-        ),
-      hinhAnh: yup
-        .array()
-        .test("at-least-one-item", "*Chọn hình ảnh", (value) => {
-          return value && value.length > 0;
-        }),
+        )
     }),
     onSubmit: (value: IYoutubeFormValue) => {
       onSubmit(value);
@@ -132,7 +127,7 @@ const YoutubeForm = ({
 
       <Form.Item wrapperCol={{ span: 18, offset: 6 }}>
         <Button htmlType="submit" type="primary">
-          Thêm
+          {defaultValue ? 'Cập Nhật' : 'Thêm'}
         </Button>
       </Form.Item>
     </Form>

@@ -19,18 +19,11 @@ import { YoutubeBannerService } from "services";
 import { useAppDispatch } from "store";
 import { setAlert } from "store/app/alert";
 import { MESSAGE_TEXT, STORE_STATUS } from "constants/apiMessage";
+import { EYoutubeBanner } from "constants/enum.constant";
 
 const { Text } = Typography;
 
-export enum EYoutubeBanner {
-  FETCH_BANNER = "fetchBanner",
-  LOADING = "loading",
-  BANNER_MODAL = "bannerModal",
-  FETCH_YOUTUBE = "fetchYoutube",
-  EMBED_MODAL = "embedModal",
-  YOUTUBE_DRAWER = "youtubeDrawer",
-  YOUTUBE_DETAIL = 'fetchYoutubeDetail',
-}
+
 
 // page context
 export interface IInitialState {
