@@ -7,7 +7,7 @@ import {
   } from "@ant-design/icons";
   import { Card, Avatar, Input, Row, Col, Button } from "antd";
   
-  const { TextArea } = Input;
+const { TextArea } = Input;
   
 const NewPostBox = () => {
   return (

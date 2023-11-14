@@ -77,4 +77,10 @@ export const userPaths = {
   createUserType: '/themLoaiNguoiDung',
   updateUserType: '/capNhatLoaiNguoiDung',
   deleteUserType: '/xoaLoaiNguoiDung',
+  // USER
+  getAllUser: '/layDanhSachNguoiDungPhanTrang',
+  getUserDetail: '/layChiTietNguoiDung',
+  createUser: '/themNguoiDung',
+  updateUser: '/capNhatNguoiDung',
+  deleteUser: '/xoaNguoiDung'
 }

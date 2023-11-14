@@ -35,6 +35,7 @@ const UserType = ({ onCreate, onUpdate, onDelete }: TUserTypeProps) => {
   }>();
   const controller = new AbortController();
 
+
   useEffect(() => {
     return () => {
       controller.abort();
