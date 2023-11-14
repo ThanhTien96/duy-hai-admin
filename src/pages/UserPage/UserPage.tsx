@@ -3,7 +3,7 @@ import React, { createContext, useReducer, Dispatch } from "react";
 import { Button, Col, Row, Spin, Typography } from "antd";
 import { HomeOutlined, UserAddOutlined } from "@ant-design/icons";
 import { COPY_RIGHT, PAGE_SIZE, STATUS_CODE } from "constants";
-import { UserList, UserType } from "./partials";
+import { UserList, UsersType } from "./partials";
 import { IUserFromBe, IUserTypeFromBe } from "types/User";
 import { EUserReducer } from "constants/enum.constant";
 import { useCallback, useEffect } from "react";
@@ -404,7 +404,7 @@ const UserPage: React.FC = () => {
               />
             </Col>
             <Col span={6}>
-              <UserType
+              <UsersType
                 onCreate={handleCreateUserType}
                 onDelete={handleDeleteUserType}
                 onUpdate={handleUpdateUserType}

@@ -27,7 +27,7 @@ type TUserTypeProps = {
   onDelete: (id: string, signal?: AbortSignal) => void;
 };
 
-const UserType = ({ onCreate, onUpdate, onDelete }: TUserTypeProps) => {
+const UsersType = ({ onCreate, onUpdate, onDelete }: TUserTypeProps) => {
   const { state, dispatch } = useContext(UserContext);
   const [userTypeDetail, setUserTypeDetail] = useState<{
     loaiNguoiDung: string;
@@ -171,4 +171,4 @@ const UserType = ({ onCreate, onUpdate, onDelete }: TUserTypeProps) => {
   );
 };
 
-export default UserType;
+export default UsersType;
