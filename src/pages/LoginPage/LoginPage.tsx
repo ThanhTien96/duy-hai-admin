@@ -27,6 +27,8 @@ import { STORE_STATUS } from "constants/apiMessage";
 import { AuthService } from "services";
 import { STATUS_CODE, pagePaths } from "constants";
 import { thunkFetchProfile } from "store/common/auth/authAsyncThunk";
+import { IS_AUTH } from "constants/auth.constant";
+import { useEffect } from "react";
 
 const { Content } = Layout;
 const { Text, Title, Link } = Typography;
@@ -105,8 +107,21 @@ export interface LoginPageProps {}
 const Page: React.FC<LoginPageProps> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading } = useAppSelector(state => state.common.auth)
-  
+  const { loading, profile, status } = useAppSelector(
+    (state) => state.common.auth
+  );
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token")
+    if (status === IS_AUTH.auth && profile) {
+      navigate("/");
+    } else if(token) {
+      (async () => {
+        await dispatch(thunkFetchProfile())
+      })() 
+    }
+  }, []);
+
   // handle login
   const handleLogin = async (value: TUserLoginValue) => {
     try {

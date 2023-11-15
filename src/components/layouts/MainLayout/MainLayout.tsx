@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import {
@@ -12,6 +12,9 @@ import { useLocation, useNavigate } from "react-router";
 const { Header, Sider, Content } = Layout;
 import "./AppLayout.style.less";
 import { pagePaths } from "constants";
+import { thunkFetchProfile } from "store/common/auth/authAsyncThunk";
+import { useAppDispatch, useAppSelector } from "store";
+import { changeColorPrimary, changeTheme } from "store/app/theme";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -19,9 +22,24 @@ type MainLayoutProps = {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = theme.useToken();
+  const {profile} = useAppSelector(state => state.common.auth);
+  const {selected} = useAppSelector(state => state.app.theme);
+
+  // auto login if local exist token
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if(token) {
+      dispatch(thunkFetchProfile())
+    } 
+    if(profile && profile.theme !== selected) {
+      dispatch(changeTheme(profile.theme))
+      dispatch(changeColorPrimary(profile.primaryColor))
+    }
+  },[])
   
   // handle navigate
   const handleNavigate = ({ key: path }: { key: React.Key }) => {

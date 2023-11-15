@@ -9,9 +9,8 @@ type PrivateRouteProps = {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({renderIfTrue, children, fallbackComponent = <NoAuthorizedPage />}) => {
-  const store = useAppSelector(store => store);
-
-  if(renderIfTrue && renderIfTrue(store) || !renderIfTrue) {
+  const state = useAppSelector(store => store);
+  if(renderIfTrue && renderIfTrue(state) || !renderIfTrue) {
     return children
   }
   return fallbackComponent;
