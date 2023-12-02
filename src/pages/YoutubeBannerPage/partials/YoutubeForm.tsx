@@ -42,8 +42,8 @@ const YoutubeForm = ({
         .string()
         .required("*URL youtube buộc nhập")
         .matches(
-          /^https:\/\/www\.youtube\.com\/embed\//,
-          'URL phải bắt đầu bằng: "https://www.youtube.com/embed/"'
+          /^https:\/\/www\.youtube\.com/,
+          'URL phải bắt đầu bằng: "https://www.youtube.com"'
         ),
       embedLink: yup
         .string()
