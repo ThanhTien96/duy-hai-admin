@@ -10,7 +10,7 @@ import {
     YoutubeFilled,
     UserOutlined
 } from '@ant-design/icons'
-
+import { FaGalacticRepublic } from "react-icons/fa6";
 export type MenuItem = Required<MenuProps>['items'][number];
 
 const getItem = (
@@ -39,6 +39,7 @@ const items: MenuItem[] = [
     getItem('Tin Tức', pagePaths.news, <MacCommandOutlined />),
     getItem('Youtube - Banner', pagePaths.youtubePost, <YoutubeFilled />),
     getItem('Người Dùng', pagePaths.user, <UserOutlined />),
+    getItem('Bài Viết Hỗ Trợ', pagePaths.blog, <FaGalacticRepublic />),
 ];
 
 

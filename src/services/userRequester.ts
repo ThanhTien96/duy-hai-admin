@@ -113,6 +113,19 @@ class UserService {
       signal,
     });
   }
+
+  // change theme and color
+  static async changeThemeColor(id: string, data: {theme?: string, primaryColor?: string}, signal?: AbortSignal) {
+    return await http({
+      url: userPaths.updateUser,
+      method: "PUT",
+      params: {
+        maNguoiDung: id
+      },
+      data,
+      signal,
+    })
+  }
   // delete user
   static async deleteUser(id: string, signal?: AbortSignal) {
     return await http({

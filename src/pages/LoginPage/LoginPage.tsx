@@ -110,15 +110,14 @@ const Page: React.FC<LoginPageProps> = () => {
   const { loading, profile, status } = useAppSelector(
     (state) => state.common.auth
   );
+  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token")
+    console.log('object', token);
     if (status === IS_AUTH.auth && profile) {
-      navigate("/");
-    } else if(token) {
-      (async () => {
-        await dispatch(thunkFetchProfile())
-      })() 
+      navigate("/home");
+    } else if (token){
+      dispatch(thunkFetchProfile());
     }
   }, []);
 

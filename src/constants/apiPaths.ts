@@ -84,3 +84,17 @@ export const userPaths = {
   updateUser: '/capNhatNguoiDung',
   deleteUser: '/xoaNguoiDung'
 }
+
+export const blogPath = {
+  createSupportPost: '/themBvHoTro',
+  getAllSupportPost: '/layDanhSachBvHoTro',
+  getSupportPostDetail: "/ChiTietBvHoTro",
+  updateSupportPost: "/capNhatBvHoTro",
+  deleteSupportPost: "/xoaBvHoTro", 
+  // fix post
+  createFixPost: "/themBVSuaChua",
+  getAllFixPost: "/layDanhSachBVSuaChua",
+  getFixPostDetail: "/layChiTietBVSuaChua",
+  updateFixPost: "/capNhatBVSuaChua",
+  deleteFixPost: "/xoaBVSuaChua",
+}

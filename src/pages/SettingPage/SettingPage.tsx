@@ -33,13 +33,13 @@ const SettingPage: React.FC<SettingPageProps> = (props) => {
       items: [
         {
           key: "/setting/account",
-          children: "Account",
+          children: "Tài Khoản",
           icon: <UserOutlined />,
           onClick: () => handleNavigate("account"),
         },
         {
           key: "/setting/appearance",
-          children: "Appearance",
+          children: "Theme",
           icon: <FormatPainterOutlined />,
           onClick: () => handleNavigate("appearance"),
         },

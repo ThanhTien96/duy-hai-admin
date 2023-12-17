@@ -3,7 +3,7 @@ import { useAppSelector } from "store";
 
 export type TTextEditorProps = {
   onChange: (value: string) => void;
-  height?: number;
+  height?: number | string;
   width?: number | string;
   defaultValue?: string;
   className?: string;

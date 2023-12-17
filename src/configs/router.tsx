@@ -30,7 +30,8 @@ const ProductDetail = React.lazy(
 const Post = React.lazy(() => import("pages/PostPage"));
 const PostDetail = React.lazy(() => import("pages/PostPage/PostDetail"));
 const YoutubeBanner = React.lazy(() => import("pages/YoutubeBannerPage"));
-const User = React.lazy(() => import('pages/UserPage'))
+const User = React.lazy(() => import("pages/UserPage"));
+const BlogPage = React.lazy(() => import("pages/BlogPage"));
 
 const extendedRoutes: RouteObject[] = [
   {
@@ -86,7 +87,7 @@ const extendedRoutes: RouteObject[] = [
         path: `${pagePaths.productDetail}/:id`,
         element: <ProductDetail />,
       },
-    ],
+    ]
   },
   {
     path: pagePaths.news,
@@ -108,7 +109,11 @@ const extendedRoutes: RouteObject[] = [
   },
   {
     path: pagePaths.user,
-    element: <User />
+    element: <User />,
+  },
+  {
+    path: pagePaths.blog,
+    element: <BlogPage />
   }
 ];
 

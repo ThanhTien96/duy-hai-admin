@@ -1,7 +1,7 @@
 import { Card, Divider, Typography } from "antd";
 import MediaBox, { TImageMediaBox } from "pages/ProductPage/ProductDetail/partials/MediaBox/MediaBox";
-import rehypeRaw from "rehype-raw";
 import { IProductMediaType } from "types/Product";
+import rehypeRaw from "rehype-raw";
 import Markdown from 'react-markdown';
 
 const { Title} = Typography;

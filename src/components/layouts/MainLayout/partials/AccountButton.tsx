@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ProfileOutlined,
   SettingOutlined,
@@ -25,11 +25,12 @@ interface MenuItemProps {
 
 interface MenuProps {
   items: (MenuItemProps | null)[];
+  onClick?: () => void;
 }
 
-const Menu = ({ items }: MenuProps) => {
+const Menu = ({ items, onClick }: MenuProps) => {
   return (
-    <Space direction='vertical' className='w-full'>
+    <Space onClick={onClick} direction="vertical" className="w-full">
       {items &&
         items.map((ele, index: React.Key) => {
           if (!ele) {
@@ -52,54 +53,58 @@ const Menu = ({ items }: MenuProps) => {
 };
 
 const AccountButton = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-  const {profile} = useAppSelector(state => state.common.auth)
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [openAccount, setOpenAccount] = useState<boolean>(false);
+  const { profile } = useAppSelector((state) => state.common.auth);
 
+  // handle navigate
+  const handleNavigate = (slug: string) => {
+    navigate(slug);
+  };
 
-    // handle navigate
-    const handleNavigate = (slug: string) => {
-        navigate(slug)
-    }
   const menuItems: (MenuItemProps | null)[] = [
     {
       key: "profile",
-      label: "Profile",
+      label: "Tài Khoản",
       icon: <ProfileOutlined />,
-      onClick: () => handleNavigate(pagePaths.profile)
+      onClick: () => handleNavigate(pagePaths.profile),
     },
     null,
     {
       key: "setting",
-      label: "Setting",
+      label: "Cài Đặt",
       icon: <SettingOutlined />,
-      onClick: () => handleNavigate(`${pagePaths.setting}/${pagePaths.account}`)
+      onClick: () =>
+        handleNavigate(`${pagePaths.setting}/${pagePaths.account}`),
     },
     {
       key: "help",
-      label: "Help",
+      label: "Hỗ Trợ",
       icon: <InfoCircleOutlined />,
     },
     null,
     {
       key: "logout",
-      label: "Logout",
+      label: "Đăng Xuất",
       icon: <LogoutOutlined />,
-      className: 'text-red-500',
-      onClick: () => dispatch(userLogout())
+      className: "text-red-500",
+      onClick: () => dispatch(userLogout()),
     },
   ];
 
   return (
     <Popover
       placement="bottomRight"
-      title={"Account"}
-      content={<Menu items={menuItems} />}
+      title={"Thông Tin Tài Khoản"}
+      content={<Menu onClick={() => setOpenAccount(false)} items={menuItems} />}
       trigger="click"
+      open={openAccount}
+      onOpenChange={() => setOpenAccount((current) => !current)}
     >
       <Button type="text" className="h-[45px] px-2">
         <div className="flex flex-row gap-4 items-center">
-          {!profile  && <Avatar icon={<UserOutlined />} />}
+          {!profile && <Avatar icon={<UserOutlined />} />}
           {profile && profile?.hinhAnh && <Avatar src={profile?.hinhAnh} />}
           <Text>{profile?.hoTen}</Text>
         </div>
