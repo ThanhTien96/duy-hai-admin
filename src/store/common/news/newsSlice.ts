@@ -5,7 +5,7 @@ import { thunkFetchAllNews, thunkFetchNewsType } from "./newsAsyncThunk";
 
 
 
-export interface INewsSLice {
+export interface INewsSlice {
     newsList: INewsPostFromBE[];
     pagination?: IProductPagination;
     pageLoading: boolean;
@@ -13,7 +13,7 @@ export interface INewsSLice {
 }
 
 
-const initialState: INewsSLice = {
+const initialState: INewsSlice = {
     newsList: [],
     pagination: undefined,
     pageLoading: false,

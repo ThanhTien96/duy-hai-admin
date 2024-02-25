@@ -17,3 +17,10 @@ export enum EYoutubeBanner {
   YOUTUBE_DRAWER = "youtubeDrawer",
   YOUTUBE_DETAIL = "fetchYoutubeDetail",
 }
+
+
+export enum EOrderReducer {
+  ORDER_LOADING = 'orderLoading',
+  FETCH_ORDER_STATUS = "fetchOrderStatus",
+}
+

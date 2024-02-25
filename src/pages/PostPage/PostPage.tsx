@@ -147,7 +147,7 @@ const PostPage: React.FC = () => {
             },
           ],
         },
-        title: "Trang Tin Tức",
+        title: "Tin Tức",
       }}
       footerprops={{ children: COPY_RIGHT, className: "text-center " }}
       className="bg-inherit"

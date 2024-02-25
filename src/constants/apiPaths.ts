@@ -98,3 +98,9 @@ export const blogPath = {
   updateFixPost: "/capNhatBVSuaChua",
   deleteFixPost: "/xoaBVSuaChua",
 }
+
+// Order
+export const orderPath = {
+  orderStatus: "/layDanhSachTrangThai",
+  updateOrderStatus: "/capNhatTrangThaiDonHang"
+}

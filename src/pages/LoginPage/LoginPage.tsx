@@ -113,13 +113,12 @@ const Page: React.FC<LoginPageProps> = () => {
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    console.log('object', token);
     if (status === IS_AUTH.auth && profile) {
       navigate("/home");
-    } else if (token){
+    } else if (token) {
       dispatch(thunkFetchProfile());
     }
-  }, []);
+  }, [profile]);
 
   // handle login
   const handleLogin = async (value: TUserLoginValue) => {
@@ -155,11 +154,11 @@ const Page: React.FC<LoginPageProps> = () => {
         <Content className="flex items-center ">
           <Space direction="vertical" className="p-8">
             <Title level={2} className="text-center">
-              Project Name
+              Quản Lý Hệ Thống
             </Title>
             <Divider className="my-0">
               <Text type="secondary" className="text-center">
-                The world's largest event tracking platform
+                Duy Hải
               </Text>
             </Divider>
             <Tabs
@@ -172,7 +171,7 @@ const Page: React.FC<LoginPageProps> = () => {
                   label: (
                     <span>
                       <LoginOutlined />
-                      Default
+                      Mặc Định
                     </span>
                   ),
                   children: <DefaultLoginForm onSubmit={handleLogin} />,
@@ -185,13 +184,13 @@ const Page: React.FC<LoginPageProps> = () => {
                       Github
                     </span>
                   ),
-                  children: <>hello</>,
+                  children: <>Sắp Ra Mắt...</>,
                 },
               ]}
             />
             <Divider className="my-0">
               <Text type="secondary" className="text-center">
-                Our contacts
+                Địa chỉ liên hệ của chúng tôi
               </Text>
             </Divider>
             <div className="flex flex-row items-center gap-4 justify-center">

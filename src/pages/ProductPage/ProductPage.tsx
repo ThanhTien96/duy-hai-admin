@@ -98,7 +98,6 @@ const ProductPage: React.FC = () => {
         dispatch(thunkFetchProductPagination({ page: 1 }));
       }
     } catch (err: Error | any) {
-      console.log(err);
       dispatch(
         setAlert({
           message: err.response.data.message ?? MESSAGE_TEXT.updateFaild,
@@ -124,7 +123,7 @@ const ProductPage: React.FC = () => {
             },
           ],
         },
-        title: "Trang Sản Phẩm",
+        title: "Sản Phẩm",
       }}
       footerprops={{
         children: COPY_RIGHT,

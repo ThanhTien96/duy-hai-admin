@@ -14,3 +14,4 @@ export { default as PostPage } from "./PostPage";
 export { default as YoutubeBannerPage } from "./YoutubeBannerPage";
 export { default as UserPage } from './UserPage';
 export { default as BlogPage } from './BlogPage'
+export { default as OrderPage } from './OrderPage'

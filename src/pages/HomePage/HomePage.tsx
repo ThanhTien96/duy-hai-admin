@@ -51,7 +51,7 @@ const HomePage: React.FC = () => {
   return (
     <PlainLayout
       headerprops={{
-        title: "Dashboard",
+        title: "Bảng Điều Khiển",
         extra: [
           <Tooltip
           key={'nonti-copied'}
@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
             <Col span={24}>
               <Card
                 size="small"
-                title="Summary"
+                title="Bản tóm tắt"
                 className="h-[300px] border-none"
                 extra={[
                   <Button
@@ -139,13 +139,13 @@ const HomePage: React.FC = () => {
             <Col span={24}>
               <Card
                 size="small"
-                title="Chart Tracking"
+                title="Theo dõi biểu đồ"
                 className="h-[350px] border-none"
                 extra={[
                   <Segmented
                     key={"segmented-1"}
                     size="small"
-                    options={["Daily", "Weekly", "Monthly"]}
+                    options={["Hằng Ngày", "Hàng Tuần", "Hàng Tháng"]}
                     onResize={undefined}
                     onResizeCapture={undefined}
                   />,
@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
             <Col span={24}>
               <Card
                 size="small"
-                title="Watch list"
+                title="Danh sách theo dõi"
                 className="h-[270px] border-none"
                 extra={[
                   <Button

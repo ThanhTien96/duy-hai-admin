@@ -40,7 +40,7 @@ const MenuPage: React.FC = () => {
             },
           ]
         },
-        title: "Trang Menu",
+        title: "Menu",
       }}
       footerprops={{
         children: COPY_RIGHT,
