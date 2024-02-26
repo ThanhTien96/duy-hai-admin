@@ -1,4 +1,4 @@
-import { Button, Table, Tag } from "antd";
+import { Button, Dropdown, Popover, Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import { IOrderStatusBase, IOrdersFromStatus } from "types/Order";
 import moment from "moment";
@@ -9,7 +9,9 @@ import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
+import { MenuProps } from "antd/lib";
 
 interface OrderTable {
   tableData: IOrdersFromStatus[];
@@ -97,7 +99,45 @@ const OrderTable = ({ tableData, handleUpdateStatusOrder }: OrderTable) => {
       render: (_, obj) => (
         <div className="flex items-center gap-4">
           <Button type="primary">Chi Tiết</Button>
+          {obj.status.role == 2 && (
+            <Popover
+              content={
+                <div className="overflow-hidden flex items-center flex-col">
+                  <span
+                    onClick={() =>
+                      handleUpdateStatusOrder(
+                        state.orderStatus[2].maTrangThai,
+                        obj.key,
+                        controller.signal
+                      )
+                    }
+                    className="cursor-pointer hover:bg-gray-500 inline-block w-full px-2 py-2"
+                  >
+                    Thành Công
+                  </span>
+                  <span 
+                  onClick={() =>
+                    handleUpdateStatusOrder(
+                      state.orderStatus[3].maTrangThai,
+                      obj.key,
+                      controller.signal
+                    )
+                  }
+                  className="cursor-pointer hover:bg-gray-500 inline-block w-full px-2 py-2">
+                    Thất Bại
+                  </span>
+                </div>
+              }
+              arrow
+              trigger={["click"]}
+            >
+              <Button type="default" className="!shadow-none">
+                <MoreOutlined className="rotate-90" />
+              </Button>
+            </Popover>
+          )}
           {obj.status.role === 1 ? (
+            (<>
             <Button
               onClick={() =>
                 handleUpdateStatusOrder(
@@ -110,9 +150,22 @@ const OrderTable = ({ tableData, handleUpdateStatusOrder }: OrderTable) => {
             >
               Duyệt Đơn
             </Button>
+            <Button
+            onClick={() =>
+              handleUpdateStatusOrder(
+                state.orderStatus[4].maTrangThai,
+                obj.key,
+                controller.signal
+              )
+            }
+            className="bg-green-500 hover:bg-green-700 hover:!border-green-700 hover:!text-white"
+          >
+            Hủy Đơn
+          </Button>
+            </>)
           ) : obj.status.role === 2 ? (
             <ClockCircleOutlined className="text-yellow-400 font-semibold text-[20px]" />
-          ) : obj.status.role === 2 ? (
+          ) : obj.status.role === 3 ? (
             <CheckCircleOutlined className="text-green-400 font-semibold text-[20px]" />
           ) : (
             <CloseCircleOutlined className="text-red-400 font-semibold text-[20px]" />
