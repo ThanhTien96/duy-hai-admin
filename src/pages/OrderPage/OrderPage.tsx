@@ -24,6 +24,7 @@ export interface IOrderStatusState extends IOrderStatusPayloadBE {
 interface IOrderInitState {
   loading: boolean;
   orderStatus: IOrderStatusState[];
+  allOrders: IOrderStatusState[];
 }
 
 interface IOrderReducerAction {
@@ -35,6 +36,7 @@ interface IOrderReducerAction {
 const initialState: IOrderInitState = {
   loading: false,
   orderStatus: [],
+  allOrders: [],
 };
 
 // page context
