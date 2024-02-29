@@ -121,7 +121,10 @@ const NewsForm = ({
         <TextEditor
           defaultValue={values.noiDung}
           className="mt-4"
-          onChange={(value) => setFieldValue("noiDung", value)}
+          onChange={(value) => {
+            console.log(value);
+            setFieldValue("noiDung", value)
+          }}
         />
 
         <div className="sticky -bottom-6">

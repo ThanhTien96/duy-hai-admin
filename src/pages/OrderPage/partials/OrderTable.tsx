@@ -1,4 +1,4 @@
-import { Button, Dropdown, Popover, Space, Table, Tag } from "antd";
+import { Button, Popover, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import { IOrderStatusBase, IOrdersFromStatus } from "types/Order";
 import moment from "moment";
@@ -11,10 +11,10 @@ import {
   CloseCircleOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
-import { MenuProps } from "antd/lib";
+
 
 interface OrderTable {
-  tableData: IOrdersFromStatus[];
+  tableData: IOrdersFromStatus[] | [];
   handleUpdateStatusOrder: (
     statusId: string,
     orderId: string,
@@ -202,7 +202,7 @@ const OrderTable = ({ tableData, handleUpdateStatusOrder }: OrderTable) => {
         }))
       : [];
 
-  return <Table columns={columns} dataSource={data} />;
+  return <Table pagination={{pageSize: 30}} columns={columns} dataSource={data} />;
 };
 
 export default OrderTable;

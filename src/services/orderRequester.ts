@@ -26,4 +26,29 @@ export class OrderService {
             signal
         })
     }
+
+    // get all order
+    static getAllOrders = async (customer?: string, statusId?: string, signal?: AbortSignal) => {
+        return await http({
+            url: orderPath.getAllOrders,
+            method: "GET",
+            params: {
+                customer,
+                statusId,
+            },
+            signal
+        })
+    }
+
+    // get orders detail
+    static getOrderDetail = async (orderId: string, signal?: AbortSignal) => {
+        return await http({
+            url: orderPath.getOrderDetail,
+            method: "GET",
+            params: {
+                maDonHang: orderId
+            }, 
+            signal
+        })
+    }
 }

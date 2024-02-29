@@ -102,5 +102,7 @@ export const blogPath = {
 // Order
 export const orderPath = {
   orderStatus: "/layDanhSachTrangThai",
-  updateOrderStatus: "/capNhatTrangThaiDonHang"
+  updateOrderStatus: "/capNhatTrangThaiDonHang",
+  getAllOrders: "/layDanhSachDonHang",
+  getOrderDetail: "/api/chiTietDonHang"
 }

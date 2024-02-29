@@ -1,10 +1,10 @@
+import { IProductFromBE } from "./Product";
 
 export enum EPriorityName {
   HIGH = "high",
   MEDIUM = "medium",
   LOW = "low",
 }
-
 
 export interface IPriority {
   id: string;
@@ -30,7 +30,7 @@ export interface IOrdersFromStatus {
   createAt: string;
   updateAt: string;
   maDoUuTien: string;
-  doUuTien?: IPriority;
+  doUuTien: IPriority;
   keyIndex: number;
   phuongThucThanhToan: string;
   trangThai: IOrderStatusBase;
@@ -38,4 +38,27 @@ export interface IOrdersFromStatus {
 
 export interface IOrderStatusPayloadBE extends IOrderStatusBase {
   donHang: IOrdersFromStatus[];
+}
+
+export interface IOrderFromBE {
+  readonly maDonHang: string;
+  tenKhachHang: string;
+  diaChi: string;
+  soDT: string;
+  tongTien: number;
+  loiNhan: string;
+  maTrangThai: string;
+  createAt: string;
+  updateAt: string;
+  maDoUuTien: string;
+  keyIndex: number;
+  phuongThucThanhToan: string;
+  doUuTien: IPriority;
+  trangThai: IOrderStatusBase;
+  sanPham?: [
+    {
+      soLuongSanPham: 1;
+      sanPham: IProductFromBE[];
+    }
+  ];
 }
