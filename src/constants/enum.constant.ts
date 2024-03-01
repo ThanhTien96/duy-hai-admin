@@ -22,6 +22,8 @@ export enum EYoutubeBanner {
 export enum EOrderReducer {
   ORDER_LOADING = 'orderLoading',
   FETCH_ORDER_STATUS = "fetchOrderStatus",
-  FETCH_ALL_ORDER = "fetchAllOrders"
+  FETCH_ALL_ORDER = "fetchAllOrders",
+  FETCH_ORDER_DETAIL = "fetchOrderDetail" ,
+  OPEN_DRAWER = "openDrawer"
 }
 

@@ -104,5 +104,5 @@ export const orderPath = {
   orderStatus: "/layDanhSachTrangThai",
   updateOrderStatus: "/capNhatTrangThaiDonHang",
   getAllOrders: "/layDanhSachDonHang",
-  getOrderDetail: "/api/chiTietDonHang"
+  getOrderDetail: "/chiTietDonHang"
 }

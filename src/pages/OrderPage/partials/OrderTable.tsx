@@ -15,6 +15,7 @@ import {
 
 interface OrderTable {
   tableData: IOrdersFromStatus[] | [];
+  fetchDetail?: (orderId: string, signal?: AbortSignal) => void;
   handleUpdateStatusOrder: (
     statusId: string,
     orderId: string,
@@ -31,7 +32,7 @@ interface DataType {
   total: string;
 }
 
-const OrderTable = ({ tableData, handleUpdateStatusOrder }: OrderTable) => {
+const OrderTable = ({ tableData, handleUpdateStatusOrder, fetchDetail }: OrderTable) => {
   const { state } = useContext(OrderContext);
   const controller = new AbortController();
 
@@ -97,8 +98,8 @@ const OrderTable = ({ tableData, handleUpdateStatusOrder }: OrderTable) => {
       title: "",
       key: "action",
       render: (_, obj) => (
-        <div className="flex items-center gap-4">
-          <Button type="primary">Chi Tiết</Button>
+        <div className="flex items-center gap-4 jus">
+          <Button onClick={() => fetchDetail && fetchDetail(obj.key, controller.signal)} type="primary">Chi Tiết</Button>
           {obj.status.role == 2 && (
             <Popover
               content={

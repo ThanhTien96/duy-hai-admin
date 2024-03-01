@@ -40,6 +40,13 @@ export interface IOrderStatusPayloadBE extends IOrderStatusBase {
   donHang: IOrdersFromStatus[];
 }
 
+export interface IOrderProduct {
+  maDonHang: string;
+  maSanPham: string;
+  soLuongSanPham: number;
+  sanPham: IProductFromBE;
+}
+
 export interface IOrderFromBE {
   readonly maDonHang: string;
   tenKhachHang: string;
@@ -55,10 +62,5 @@ export interface IOrderFromBE {
   phuongThucThanhToan: string;
   doUuTien: IPriority;
   trangThai: IOrderStatusBase;
-  sanPham?: [
-    {
-      soLuongSanPham: 1;
-      sanPham: IProductFromBE[];
-    }
-  ];
+  sanPham?: IOrderProduct[];
 }

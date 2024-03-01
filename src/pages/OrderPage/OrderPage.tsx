@@ -1,6 +1,6 @@
 import { PlainLayout } from "components/layouts/ChildLayout/PlainLayout";
 import { COPY_RIGHT, STATUS_CODE } from "constants";
-import { Spin, Tabs, Typography } from "antd";
+import { Drawer, Spin, Tabs, Typography } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
 import useHelmet from "hooks/useHelmet";
@@ -25,6 +25,7 @@ import { setAlert } from "store/app/alert";
 import { STORE_STATUS } from "constants/apiMessage";
 import { TabsProps } from "antd/lib";
 import OrderTable from "./partials/OrderTable";
+import OrderDetail from "./partials/OrderDetail";
 
 const { Text } = Typography;
 
@@ -36,6 +37,8 @@ interface IOrderInitState {
   loading: boolean;
   orderStatus: IOrderStatusState[];
   allOrders: IOrderFromBE[];
+  orderDetail?: IOrderFromBE;
+  isOpenDrawer: boolean;
 }
 
 interface IOrderReducerAction {
@@ -48,6 +51,8 @@ const initialState: IOrderInitState = {
   loading: false,
   orderStatus: [],
   allOrders: [],
+  orderDetail: undefined,
+  isOpenDrawer: false,
 };
 
 // page context
@@ -70,6 +75,10 @@ const orderReducer = (state: IOrderInitState, action: IOrderReducerAction) => {
       return { ...state, orderStatus: payload };
     case EOrderReducer.FETCH_ALL_ORDER:
       return { ...state, allOrders: payload };
+    case EOrderReducer.FETCH_ORDER_DETAIL:
+      return { ...state, orderDetail: payload };
+    case EOrderReducer.OPEN_DRAWER:
+      return { ...state, isOpenDrawer: payload };
     default:
       return state;
   }
@@ -141,6 +150,31 @@ const OrderPage = () => {
     }
   };
 
+  // handle fetch order detail
+  const fetchOrderDetail = useCallback(
+    async (orderId: string, signal?: AbortSignal) => {
+      try {
+        const res = await OrderService.getOrderDetail(orderId, signal);
+
+        if (res.status === STATUS_CODE.success) {
+          handleOpenDrawer(true);
+          dispatch({
+            type: EOrderReducer.FETCH_ORDER_DETAIL,
+            payload: res.data.data,
+          });
+        }
+      } catch (err: Error | any) {
+        reduxDispatch(
+          setAlert({
+            message: "Lấy chi tiết đơn hàng thất bại",
+            status: STORE_STATUS.error,
+          })
+        );
+      }
+    },
+    []
+  );
+
   // handle update status order
   const handleUpdateStatusOrder = useCallback(
     async (statusId: string, orderId: string, signal?: AbortSignal) => {
@@ -177,6 +211,11 @@ const OrderPage = () => {
     },
     []
   );
+
+  // handle open drawer
+  const handleOpenDrawer = (open: boolean) => {
+    dispatch({ type: EOrderReducer.OPEN_DRAWER, payload: open });
+  };
 
   // count total orders
   const totalOrders = useMemo(() => {
@@ -217,6 +256,7 @@ const OrderPage = () => {
       label: "Tất cả đơn hàng",
       children: (
         <OrderTable
+          fetchDetail={fetchOrderDetail}
           handleUpdateStatusOrder={handleUpdateStatusOrder}
           tableData={allOrders}
         />
@@ -227,6 +267,7 @@ const OrderPage = () => {
       label: ele.trangThai.charAt(0).toUpperCase() + ele.trangThai.substring(1),
       children: (
         <OrderTable
+          fetchDetail={fetchOrderDetail}
           handleUpdateStatusOrder={handleUpdateStatusOrder}
           tableData={ele.donHang}
         />
@@ -259,12 +300,22 @@ const OrderPage = () => {
       >
         <Spin spinning={state.loading}>
           <OrderInfo totalOrders={totalOrders} />
-          <Tabs
-            tabBarExtraContent={<div>this is search box</div>}
-            className="mt-4"
-            defaultActiveKey="1"
-            items={items}
-          />
+          <Tabs className="mt-4" defaultActiveKey="1" items={items} />
+
+          {/* order detail drawer  */}
+          <Drawer
+          // extra={[
+          //   state.orderDetail && <Button type={"primary"} key={1} onClick={() => handleUpdateStatusOrder(
+          //     state.orderStatus.find((ele: IOrderStatusBase )=> ele.role === state.orderDetail?.trangThai?.role + 1).maTrangThai,
+          //     state.orderDetail?.maDonHang
+          //   )}></Button>
+          // ]}
+            width={"40%"}
+            open={state.isOpenDrawer}
+            onClose={() => handleOpenDrawer(false)}
+          >
+            {state.orderDetail && <OrderDetail />}
+          </Drawer>
         </Spin>
       </PlainLayout>
     </OrderContext.Provider>
