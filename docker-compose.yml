@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  admin_app:
+    build: .
+    container_name: admin_app
+    env_file: .env
+    ports: 
+      - 3000:4173
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_TOKEN=${REACT_APP_TOKEN}
+      - REACT_APP_API=${REACT_APP_API}
+ 

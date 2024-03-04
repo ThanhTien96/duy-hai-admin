@@ -122,7 +122,6 @@ const NewsForm = ({
           defaultValue={values.noiDung}
           className="mt-4"
           onChange={(value) => {
-            console.log(value);
             setFieldValue("noiDung", value)
           }}
         />
