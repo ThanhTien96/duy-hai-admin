@@ -40,8 +40,8 @@ function DefaultLoginForm({
 }) {
   const formik = useFormik({
     initialValues: {
-      taiKhoan: "",
-      matKhau: "",
+      taiKhoan: "duyhaiserver",
+      matKhau: "duyhaiserver",
     },
     validationSchema: yup.object({
       taiKhoan: yup.string().required("Vui lòng nhập tài khoản!"),
