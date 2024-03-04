@@ -63,6 +63,7 @@ function DefaultLoginForm({
     >
       <Form.Item>
         <Input
+        defaultValue={formik.values.taiKhoan}
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Tài Khoản"
           name="taiKhoan"
@@ -74,6 +75,7 @@ function DefaultLoginForm({
       </Form.Item>
       <Form.Item>
         <Input
+        defaultValue={formik.values.matKhau}
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Mật Khẩu"
